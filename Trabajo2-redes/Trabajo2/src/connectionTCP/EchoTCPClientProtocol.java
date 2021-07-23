@@ -1,4 +1,4 @@
-package controlador;
+package connectionTCP;
 
 import java.io.BufferedReader;
 import java.io.IOException;
