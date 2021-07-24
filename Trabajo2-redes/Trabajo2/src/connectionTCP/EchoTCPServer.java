@@ -2,6 +2,9 @@ package connectionTCP;
 
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+
+import model.Account;
 
 public class EchoTCPServer {
 	
@@ -11,14 +14,14 @@ public class EchoTCPServer {
 	private Socket serverSideSocket;
 	
 	public EchoTCPServer() {
-		System.out.println("Ecgo TCP server...");
+		System.out.println("Server-Bank EchoTCP");
 	}
 	
 	public void init() throws Exception {
 		listener = new ServerSocket(PORT);
 		
 		while(true){
-			System.out.println("The echo TCP client is waiting for the client...");
+			System.out.println("El servidor TCP echo está esperando al usuario...");
 			serverSideSocket = listener.accept();
 			
 			EchoTCPServerProtocol.protocol(serverSideSocket);

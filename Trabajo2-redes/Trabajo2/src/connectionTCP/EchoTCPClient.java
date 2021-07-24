@@ -3,6 +3,7 @@ package connectionTCP;
 import java.net.Socket;
 
 public class EchoTCPClient {
+	
 	public static final int PORT = 3400;
 	public static final String SERVER = "localhost";
 	

@@ -7,7 +7,6 @@ package model;
  */
 public class Account {
 
-	private short accountNumber;
 	private String name;
 	private int balance;
 	private Pocket pocket;
@@ -15,8 +14,7 @@ public class Account {
 	/**
 	 * Construct
 	 */
-	public Account(short accountNumber, String name) {
-		this.accountNumber = accountNumber;
+	public Account(String name) {
 		this.name = name;
 		balance = 0;
 	}
@@ -47,13 +45,6 @@ public class Account {
 	 */
 	public Pocket getAccountPocket() {
 		return pocket;
-	}
-	
-	/**
-	 * @return the accountNumber
-	 */
-	public short getAccountNumber() {
-		return accountNumber;
 	}
 
 	/**
