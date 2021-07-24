@@ -9,10 +9,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import model.Account;
+import model.Bank;
 import model.Pocket;
 
 public class EchoTCPServerProtocol {
-	private static Account account;
+	private static Bank bank;
 
 	private static PrintWriter toNetwork;
 	private static BufferedReader fromNetwork;
