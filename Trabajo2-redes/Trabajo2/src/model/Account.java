@@ -10,6 +10,7 @@ public class Account {
 	private short accountNumber;
 	private String name;
 	private int balance;
+	private Pocket pocket;
 	
 	/**
 	 * Construct
@@ -34,6 +35,20 @@ public class Account {
 		this.balance = balance;
 	}
 
+	/**
+	 * @param pocket the pocket to set
+	 */
+	public void setPocket(Pocket pocket) {
+		this.pocket = pocket;
+	}
+
+	/**
+	 * @return the pocket
+	 */
+	public Pocket getAccountPocket() {
+		return pocket;
+	}
+	
 	/**
 	 * @return the accountNumber
 	 */
