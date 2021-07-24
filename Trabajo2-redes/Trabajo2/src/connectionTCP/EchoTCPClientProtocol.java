@@ -17,7 +17,7 @@ public class EchoTCPClientProtocol {
 		// TODO Auto-generated method stub
 		createStreams(socket);
 		
-		System.out.println("Indique sus primer nombre y primer apellido para abrir una cuenta:");
+		System.out.println("Indique su primer nombre y primer apellido para abrir una cuenta:");
 		String name = SCANNER.nextLine();
 		
 		toNetwork.println(name);

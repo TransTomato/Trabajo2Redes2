@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class Bank {
 
-	private HashMap<Account, String> accounts = new HashMap<Account, String>();
+	public HashMap<Account, String> accounts = new HashMap<Account, String>();
 	
 	/**
 	 * 
@@ -15,5 +15,8 @@ public class Bank {
 		accounts.put(account, ""+accounts.size()+1);
 	}
 	
+	public void createPocket() {
+		
+	}
 	
 }

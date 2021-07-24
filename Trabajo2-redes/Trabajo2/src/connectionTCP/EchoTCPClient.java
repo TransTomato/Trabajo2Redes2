@@ -15,12 +15,15 @@ public class EchoTCPClient {
 	
 	public void init() throws Exception{
 		
+		
 		clientSideSocket = new Socket(SERVER, PORT);
 		System.out.println("Connection approved from Server Side");
 		
+		
 		EchoTCPClientProtocol.protocol(clientSideSocket);
 		
-		clientSideSocket.close();
+		
+		//clientSideSocket.close();
 	}
 	
 	public static void main(String args[]) throws Exception{

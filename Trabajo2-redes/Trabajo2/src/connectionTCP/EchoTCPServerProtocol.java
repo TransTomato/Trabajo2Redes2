@@ -25,11 +25,14 @@ public class EchoTCPServerProtocol {
 		 
 		 String option = fromNetwork.readLine();
 		 System.out.println("From client: "+option);
-		 String answer = "";
+		 String answer = "Cuenta creada :D, usté es el usuario #"+ bank.accounts.size();
+		 
+		 if(option.length()==1) {
+		
 		 
 			 switch(Short.parseShort(option)) {
 			 	case 1:
-			 		
+			 		answer = "Cuenta creada :D, usté es el usuario #"+ bank.accounts.size();
 			 	break;
 			 	case 2:
 			 			
@@ -50,7 +53,8 @@ public class EchoTCPServerProtocol {
 				 	
 				break;
 		 }
-		 
+			 
+		} 
 		 
 		 
 		 toNetwork.println(answer);
@@ -58,6 +62,7 @@ public class EchoTCPServerProtocol {
 	}
 	
 	private static void createStreams(Socket socket) throws IOException{
+		bank = new Bank();
 		toNetwork = new PrintWriter(socket.getOutputStream(), true);
 		fromNetwork = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 	}
