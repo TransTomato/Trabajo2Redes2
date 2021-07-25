@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class Bank {
 
-	public HashMap<Short, Account> accounts = new HashMap<Short, Account>();
+	public HashMap<String, Account> accounts = new HashMap<String, Account>();
 	
 	/**
 	 * 
@@ -17,13 +17,13 @@ public class Bank {
 	 */
 	public void createAccount(String name) {
 		Account account = new Account(name);
-		accounts.put((short) (accounts.size()+1), account);
+		accounts.put(""+(accounts.size()+1), account);
 	}
 	/**
 	 * 
 	 * @param accountNumber
 	 */
-	public void createPocket(short accountNumber) {
+	public void createPocket(String accountNumber) {
 		Pocket pocket = new Pocket(accountNumber);
 		accounts.get(accountNumber).setPocket(pocket);
 	}
@@ -31,7 +31,7 @@ public class Bank {
 	 * 
 	 * @param accountNumber
 	 */
-	public void terminatePocket(short accountNumber) {
-		accounts.get(accountNumber).setPocket(null);
+	public void terminatePocket(String pocketNumber) {
+		accounts.get(pocketNumber.substring(1)).setPocket(null);
 	}
 }

@@ -35,7 +35,7 @@ public class Pocket {
 	 * @param accountNumber
 	 * @param balance
 	 */
-	public Pocket(short accountNumber) {
+	public Pocket(String accountNumber) {
 		this.accountNumber = "b" + accountNumber;
 		this.balance = 0;
 	}

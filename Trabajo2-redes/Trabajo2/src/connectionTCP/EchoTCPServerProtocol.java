@@ -43,16 +43,16 @@ public class EchoTCPServerProtocol {
 				System.out.println("Sent to client: "+message);
 				message = fromNetwork.readLine();
 				System.out.println("From client: "+message);
-				bank.createPocket(Short.parseShort(message));
+				bank.createPocket(message);
 				answer = "Bolsillo creado con éxito";
 		 	break;
 		 	case CANCELAR_BOLSILLO:
-		 		answer = "Indique el número de cuenta:";
+		 		answer = "Indique el número de bolsillo:";
 		 		toNetwork.println(answer);
 				System.out.println("Sent to client: "+message);
 				message = fromNetwork.readLine();
 				System.out.println("From client: "+message);
-				bank.terminatePocket(Short.parseShort(message));
+				bank.terminatePocket(message);
 				answer = "Bolsillo cancelado con éxito";
 		 	break;
 		 	case CANCELAR_CUENTA:
