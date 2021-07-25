@@ -30,11 +30,11 @@ public class EchoTCPServerProtocol {
 		 String answer = "";
 		
 		 try {
-			opcionNoValida(message.split(",")[0]);
+			invalidOption(message.split(",")[0]);
 			 switch(BankOptions.valueOf(message.split(",")[0])) {
 			 	case ABRIR_CUENTA:
 			 		try {
-			 			nombreIncorrecto(message.split(",")[1]);
+			 			invalidName(message.split(",")[1]);
 			 			bank.createAccount(message.split(",")[1]);
 						answer = "Cuenta creada correctamente. Usted es la cuenta # "+bank.accounts.size();
 						
@@ -132,24 +132,24 @@ public class EchoTCPServerProtocol {
 		fromNetwork = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 	}
 
-	public static void nombreIncorrecto(String nombre) throws NameException {
-		char[] chars = nombre.toCharArray();   
+	public static void invalidName(String name) throws NameException {
+		char[] chars = name.toCharArray();   
 	      for(char c : chars){
 	         if(Character.isDigit(c)){
 	            throw new NameException("El nombre no puede contener numeros");
 	         }
 	      }
-	      if(nombre.indexOf(' ')==0) {
+	      if(name.indexOf(' ')==0) {
 	    	  throw new NameException("El nombre no puede empezar con un espacios");
 	    	  
 	      }
 	}
 	
-	public static void opcionNoValida(String opcion) throws OptionException {
-		if(!(opcion.contentEquals("ABRIR_CUENTA,")||opcion.contentEquals("ABRIR_BOLSILLO,")
-			||opcion.contentEquals("CANCELAR_BOLSILLO,")||opcion.contentEquals("CANCELAR_CUENTA,")
-			||opcion.contentEquals("DEPOSITAR,")||opcion.contentEquals("RETIRAR,")||opcion.contentEquals("TRASLADAR,")
-			||opcion.contentEquals("CONSULTAR,")||opcion.contentEquals("CARGAR,"))) {
+	public static void invalidOption(String option) throws OptionException {
+		if(!(option.contentEquals("ABRIR_CUENTA,")||option.contentEquals("ABRIR_BOLSILLO,")
+			||option.contentEquals("CANCELAR_BOLSILLO,")||option.contentEquals("CANCELAR_CUENTA,")
+			||option.contentEquals("DEPOSITAR,")||option.contentEquals("RETIRAR,")||option.contentEquals("TRASLADAR,")
+			||option.contentEquals("CONSULTAR,")||option.contentEquals("CARGAR,"))) {
 			throw new OptionException("Por favor introduzca una opcion valida");
 		}
 	}
