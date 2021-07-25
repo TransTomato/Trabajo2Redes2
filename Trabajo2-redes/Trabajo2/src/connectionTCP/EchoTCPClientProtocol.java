@@ -24,7 +24,7 @@ public class EchoTCPClientProtocol {
 				+ "\n -, ABRIR_CUENTA,<nombre completo>"
 				+ "\n -. ABRIR_BOLSILLO,<numero cuenta>"
 				+ "\n -. CANCELAR_BOLSILLO,<numero bolsillo>"
-				+ "\n -. CANCELAR_CUENTA,<numero bolsillo>"
+				+ "\n -. CANCELAR_CUENTA,<numero cuenta>"
 				+ "\n -. DEPOSITAR,<numero cuenta>,<valor>"
 				+ "\n -. RETIRAR,<numero cuenta>,<valor>"
 				+ "\n -. TRASLADAR,<numero cuenta>,<valor>"

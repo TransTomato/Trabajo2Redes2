@@ -41,10 +41,10 @@ public class EchoTCPServerProtocol {
 				answer = "Bolsillo cancelado con éxito";
 		 	break;
 		 	case CANCELAR_CUENTA:
-		 		
+		 		bank.terminateAccount(message.split(",")[1]);
 		 	break;
 		 	case DEPOSITAR:
-		 	
+		 		
 		 	break;
 		 	case RETIRAR:
 			 	

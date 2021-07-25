@@ -34,4 +34,52 @@ public class Bank {
 	public void terminatePocket(String pocketNumber) {
 		accounts.get(pocketNumber.substring(1)).setPocket(null);
 	}
+	/**
+	 * 
+	 * @param accountNumber
+	 */
+	public void terminateAccount(String accountNumber) {
+		accounts.remove(accountNumber);
+	}
+	/**
+	 * 
+	 * @param accountNumber
+	 * @param money
+	 */
+	public void deposit(String accountNumber, int amount) {
+		Account account = accounts.get(accountNumber);
+		account.setBalance(account.getBalance()+amount);
+	}
+	/**
+	 * 
+	 * @param accountNumber
+	 * @param amount
+	 */
+	public void withdraw(String accountNumber, int amount) {
+		Account account = accounts.get(accountNumber);
+		account.setBalance(account.getBalance()-amount);
+	}
+	/**
+	 * 
+	 * @param accountNumber
+	 * @param amount
+	 */
+	public void transfer(String accountNumber, int amount) {
+		Account account = accounts.get(accountNumber);
+		Pocket pocket = account.getAccountPocket();
+		account.setBalance(account.getBalance()-amount);
+		pocket.setBalance(pocket.getBalance()+amount);
+	}
+	/**
+	 * 
+	 * @param accountNumber
+	 * @return
+	 */
+	public int checkAccount(String accountNumber) {
+		Account account = accounts.get(accountNumber);
+		if(accountNumber.startsWith("b")) {
+			return account.getAccountPocket().getBalance();
+		}
+		return account.getBalance();
+	}
 }
