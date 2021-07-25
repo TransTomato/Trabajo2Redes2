@@ -39,7 +39,13 @@ public class EchoTCPServerProtocol {
 					answer = "Cuenta creada correctamente. Usted es la cuenta # "+bank.accounts.size();
 			 	break;
 			 	case 2:
-			 			
+			 		answer = "Indique el número de cuenta:";
+			 		toNetwork.println(answer);
+					System.out.println("Sent to client: "+message);
+					message = fromNetwork.readLine();
+					System.out.println("From client: "+message);
+					bank.createPocket(Short.parseShort(message));
+					answer = "Bolsillo creado con éxito";
 			 	break;
 			 	case 3:
 			 		

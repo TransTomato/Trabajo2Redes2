@@ -1,10 +1,15 @@
 package model;
-
+/**
+ * 			Universidad del Quindío
+ * @author	Michelle Quintero Hernández
+ *			José Manuel Rojas Tovar
+ *			Brayan Tabares Hidalgo
+ */
 import java.util.HashMap;
 
 public class Bank {
 
-	public HashMap<Account, String> accounts = new HashMap<Account, String>();
+	public HashMap<Short, Account> accounts = new HashMap<Short, Account>();
 	
 	/**
 	 * 
@@ -12,11 +17,15 @@ public class Bank {
 	 */
 	public void createAccount(String name) {
 		Account account = new Account(name);
-		accounts.put(account, ""+accounts.size()+1);
+		accounts.put((short) (accounts.size()+1), account);
 	}
-	
-	public void createPocket() {
-		
+	/**
+	 * 
+	 * @param accountNumber
+	 */
+	public void createPocket(short accountNumber) {
+		Pocket pocket = new Pocket(accountNumber);
+		accounts.get(accountNumber).setPocket(pocket);
 	}
 	
 }
