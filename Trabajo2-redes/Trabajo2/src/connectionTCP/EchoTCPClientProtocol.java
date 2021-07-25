@@ -19,7 +19,7 @@ public class EchoTCPClientProtocol {
 		// TODO Auto-generated method stub
 		createStreams(socket);
 		
-		System.out.println("Elija su opción (Coloque opción como aparece seguido"
+		System.out.println("Elija su opcion (Coloque opcion como aparece seguido"
 				+ " de una coma y la info necesaria, EJ: ABRIR_CUENTA,Michelle Quintero:"
 				+ "\n -, ABRIR_CUENTA,<nombre completo>"
 				+ "\n -. ABRIR_BOLSILLO,<numero cuenta>"
@@ -28,7 +28,8 @@ public class EchoTCPClientProtocol {
 				+ "\n -. DEPOSITAR,<numero cuenta>,<valor>"
 				+ "\n -. RETIRAR,<numero cuenta>,<valor>"
 				+ "\n -. TRASLADAR,<numero cuenta>,<valor>"
-				+ "\n -. CONSULTAR,<numero cuenta>");
+				+ "\n -. CONSULTAR,<numero cuenta>"
+				+ "\n -. CARGAR,<nombre del archivo>");
 		
 		String message = SCANNER.nextLine();
 		toNetwork.println(message);

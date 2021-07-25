@@ -60,6 +60,10 @@ public class EchoTCPServerProtocol {
 			 	int balance = bank.checkAccount(message.split(",")[1]);
 			 	answer = "Su saldo en la cuenta #"+message.split(",")[1]+" es de "+balance;
 			break;
+		 	case CARGAR:
+			 	
+			 	answer = "Se ha cargado los datos del archivo: "+message.split(",")[1];
+			break;
 	 }
 		 
 		 
