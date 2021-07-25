@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 import model.Account;
 import model.Bank;
+import model.BankOptions;
 import model.Pocket;
 
 public class EchoTCPServerProtocol {
@@ -24,47 +25,53 @@ public class EchoTCPServerProtocol {
 		 String message = fromNetwork.readLine();
 		 System.out.println("From client: "+message);
 		 String answer = "";
-		 
-		 if(message.length()==1) {
 		
 		 
-			 switch(Short.parseShort(message)) {
-			 	case 1:
-			 		answer = "Indique su primer nombre y primer apellido:";
-			 		toNetwork.println(answer);
-					System.out.println("Sent to client: "+message);
-					message = fromNetwork.readLine();
-					System.out.println("From client: "+message);
-					bank.createAccount(message);
-					answer = "Cuenta creada correctamente. Usted es la cuenta # "+bank.accounts.size();
-			 	break;
-			 	case 2:
-			 		answer = "Indique el número de cuenta:";
-			 		toNetwork.println(answer);
-					System.out.println("Sent to client: "+message);
-					message = fromNetwork.readLine();
-					System.out.println("From client: "+message);
-					bank.createPocket(Short.parseShort(message));
-					answer = "Bolsillo creado con éxito";
-			 	break;
-			 	case 3:
-			 		
-			 	break;
-			 	case 4:
-			 		
-			 	break;
-			 	case 5:
+		 switch(BankOptions.valueOf(message)) {
+		 	case ABRIR_CUENTA:
+		 		answer = "Indique su primer nombre y primer apellido:";
+		 		toNetwork.println(answer);
+				System.out.println("Sent to client: "+message);
+				message = fromNetwork.readLine();
+				System.out.println("From client: "+message);
+				bank.createAccount(message);
+				answer = "Cuenta creada correctamente. Usted es la cuenta # "+bank.accounts.size();
+		 	break;
+		 	case ABRIR_BOLSILLO:
+		 		answer = "Indique el número de cuenta:";
+		 		toNetwork.println(answer);
+				System.out.println("Sent to client: "+message);
+				message = fromNetwork.readLine();
+				System.out.println("From client: "+message);
+				bank.createPocket(Short.parseShort(message));
+				answer = "Bolsillo creado con éxito";
+		 	break;
+		 	case CANCELAR_BOLSILLO:
+		 		answer = "Indique el número de cuenta:";
+		 		toNetwork.println(answer);
+				System.out.println("Sent to client: "+message);
+				message = fromNetwork.readLine();
+				System.out.println("From client: "+message);
+				bank.terminatePocket(Short.parseShort(message));
+				answer = "Bolsillo cancelado con éxito";
+		 	break;
+		 	case CANCELAR_CUENTA:
+		 		
+		 	break;
+		 	case DEPOSITAR:
+		 	
+		 	break;
+		 	case RETIRAR:
 			 	
-			 	break;
-			 	case 6:
-				 	
-				break;
-			 	case 7:
-				 	
-				break;
-		 }
-			 
-		} 
+			break;
+		 	case TRASLADAR:
+			 	
+			break;
+		 	case CONSULTAR:
+			 	
+			break;
+	 }
+		 
 		 
 		 
 		 toNetwork.println(answer);

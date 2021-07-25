@@ -7,6 +7,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
+import model.BankOptions;
+
 public class EchoTCPClientProtocol {
 	private static final Scanner SCANNER = new Scanner(System.in);
 	
@@ -19,17 +21,17 @@ public class EchoTCPClientProtocol {
 		
 		System.out.println("Elija su opción:"
 				+ "\n 1, Abrir Cuenta 2. Crear un bolsillo 3. Cancelar un bolsillo"
-				+ "\n 4. Depositar a una cuenta 5.Retirar de una cuenta"
-				+ "\n 6. Trasladar al bolsillo 7. Consultar Saldo");
+				+ "\n 4. Cancelar cuenta 5. Depositar a una cuenta 6.Retirar de una cuenta"
+				+ "\n 7. Trasladar al bolsillo 8. Consultar Saldo");
 		
-		String option = SCANNER.nextLine();
-		toNetwork.println(option);
+		String message = SCANNER.nextLine();
+		toNetwork.println(BankOptions.values()[Integer.parseInt(message)-1]);
 		
 		String fromServer = fromNetwork.readLine();
 		System.out.println("FROM SERVER: "+fromServer);
 		
-		String answer = SCANNER.nextLine();
-		toNetwork.println(answer);
+		message = SCANNER.nextLine();
+		toNetwork.println(message);
 		
 		fromServer = fromNetwork.readLine();
 		System.out.println("FROM SERVER: "+fromServer);

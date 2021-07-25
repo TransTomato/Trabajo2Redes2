@@ -27,5 +27,11 @@ public class Bank {
 		Pocket pocket = new Pocket(accountNumber);
 		accounts.get(accountNumber).setPocket(pocket);
 	}
-	
+	/**
+	 * 
+	 * @param accountNumber
+	 */
+	public void terminatePocket(short accountNumber) {
+		accounts.get(accountNumber).setPocket(null);
+	}
 }
