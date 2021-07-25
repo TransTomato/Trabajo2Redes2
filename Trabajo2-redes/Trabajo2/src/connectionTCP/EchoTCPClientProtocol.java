@@ -19,23 +19,22 @@ public class EchoTCPClientProtocol {
 		// TODO Auto-generated method stub
 		createStreams(socket);
 		
-		System.out.println("Elija su opción:"
-				+ "\n 1, Abrir Cuenta 2. Crear un bolsillo 3. Cancelar un bolsillo"
-				+ "\n 4. Cancelar cuenta 5. Depositar a una cuenta 6.Retirar de una cuenta"
-				+ "\n 7. Trasladar al bolsillo 8. Consultar Saldo");
+		System.out.println("Elija su opción (Coloque el número de la opción seguido"
+				+ " de una coma y la info necesaria, EJ: 1,Michelle Quintero:"
+				+ "\n -, ABRIR_CUENTA,<nombre completo>"
+				+ "\n -. ABRIR_BOLSILLO,<numero cuenta>"
+				+ "\n -. CANCELAR_BOLSILLO,<numero bolsillo>"
+				+ "\n -. CANCELAR_CUENTA,<numero bolsillo>"
+				+ "\n -. DEPOSITAR,<numero cuenta>,<valor>"
+				+ "\n -. RETIRAR,<numero cuenta>,<valor>"
+				+ "\n -. TRASLADAR,<numero cuenta>,<valor>"
+				+ "\n -. CONSULTAR,<numero cuenta>");
 		
 		String message = SCANNER.nextLine();
-		toNetwork.println(BankOptions.values()[Integer.parseInt(message)-1]);
+		toNetwork.println(message);
 		
 		String fromServer = fromNetwork.readLine();
 		System.out.println("FROM SERVER: "+fromServer);
-		
-		message = SCANNER.nextLine();
-		toNetwork.println(message);
-		
-		fromServer = fromNetwork.readLine();
-		System.out.println("FROM SERVER: "+fromServer);
-		
 		
 	}
 	

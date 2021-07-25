@@ -27,32 +27,17 @@ public class EchoTCPServerProtocol {
 		 String answer = "";
 		
 		 
-		 switch(BankOptions.valueOf(message)) {
+		 switch(BankOptions.valueOf(message.split(",")[0])) {
 		 	case ABRIR_CUENTA:
-		 		answer = "Indique su primer nombre y primer apellido:";
-		 		toNetwork.println(answer);
-				System.out.println("Sent to client: "+message);
-				message = fromNetwork.readLine();
-				System.out.println("From client: "+message);
-				bank.createAccount(message);
+				bank.createAccount(message.split(",")[1]);
 				answer = "Cuenta creada correctamente. Usted es la cuenta # "+bank.accounts.size();
 		 	break;
 		 	case ABRIR_BOLSILLO:
-		 		answer = "Indique el número de cuenta:";
-		 		toNetwork.println(answer);
-				System.out.println("Sent to client: "+message);
-				message = fromNetwork.readLine();
-				System.out.println("From client: "+message);
-				bank.createPocket(message);
-				answer = "Bolsillo creado con éxito";
+				bank.createPocket(message.split(",")[1]);
+				answer = "Bolsillo creado con éxito. Bolsillo # b"+message.split(",")[1];
 		 	break;
 		 	case CANCELAR_BOLSILLO:
-		 		answer = "Indique el número de bolsillo:";
-		 		toNetwork.println(answer);
-				System.out.println("Sent to client: "+message);
-				message = fromNetwork.readLine();
-				System.out.println("From client: "+message);
-				bank.terminatePocket(message);
+				bank.terminatePocket(message.split(",")[1]);
 				answer = "Bolsillo cancelado con éxito";
 		 	break;
 		 	case CANCELAR_CUENTA:
