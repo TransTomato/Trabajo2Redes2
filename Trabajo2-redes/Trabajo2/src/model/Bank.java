@@ -24,6 +24,7 @@ public class Bank {
 	 * @param accountNumber
 	 */
 	public void createPocket(String accountNumber) {
+		accountNumber = accountNumber.replaceAll(" ","");
 		Pocket pocket = new Pocket(accountNumber);
 		accounts.get(accountNumber).setPocket(pocket);
 	}
@@ -39,6 +40,7 @@ public class Bank {
 	 * @param accountNumber
 	 */
 	public void terminateAccount(String accountNumber) {
+		accountNumber = accountNumber.replaceAll(" ","");
 		accounts.remove(accountNumber);
 	}
 	/**
@@ -47,6 +49,7 @@ public class Bank {
 	 * @param money
 	 */
 	public void deposit(String accountNumber, int amount) {
+		accountNumber = accountNumber.replaceAll(" ","");
 		Account account = accounts.get(accountNumber);
 		account.setBalance(account.getBalance()+amount);
 	}
@@ -56,6 +59,7 @@ public class Bank {
 	 * @param amount
 	 */
 	public void withdraw(String accountNumber, int amount) {
+		accountNumber = accountNumber.replaceAll(" ","");
 		Account account = accounts.get(accountNumber);
 		account.setBalance(account.getBalance()-amount);
 	}
@@ -65,6 +69,7 @@ public class Bank {
 	 * @param amount
 	 */
 	public void transfer(String accountNumber, int amount) {
+		accountNumber = accountNumber.replaceAll(" ","");
 		Account account = accounts.get(accountNumber);
 		Pocket pocket = account.getAccountPocket();
 		account.setBalance(account.getBalance()-amount);
@@ -76,10 +81,13 @@ public class Bank {
 	 * @return
 	 */
 	public int checkAccount(String accountNumber) {
-		Account account = accounts.get(accountNumber);
+		accountNumber = accountNumber.replaceAll(" ","");
+		Account account;
 		if(accountNumber.startsWith("b")) {
+			account = accounts.get(accountNumber.replace("b", ""));
 			return account.getAccountPocket().getBalance();
 		}
+		 account = accounts.get(accountNumber);
 		return account.getBalance();
 	}
 }

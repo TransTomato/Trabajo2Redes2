@@ -42,18 +42,23 @@ public class EchoTCPServerProtocol {
 		 	break;
 		 	case CANCELAR_CUENTA:
 		 		bank.terminateAccount(message.split(",")[1]);
+		 		answer = "Cuenta # "+message.split(",")[1]+" cancelada exitosamente";
 		 	break;
 		 	case DEPOSITAR:
-		 		
+		 		bank.deposit(message.split(",")[1], Integer.parseInt(message.split(",")[2]));
+		 		answer = "Se depositó "+message.split(",")[2]+" en la cuenta # "+message.split(",")[1]+" correctamente";
 		 	break;
 		 	case RETIRAR:
-			 	
+			 	bank.withdraw(message.split(",")[1], Integer.parseInt(message.split(",")[2]));
+			 	answer = "Se retiró "+message.split(",")[2]+" de la cuenta # "+message.split(",")[1]+" correctamente";
 			break;
 		 	case TRASLADAR:
-			 	
+			 	bank.transfer(message.split(",")[1], Integer.parseInt(message.split(",")[2]));
+			 	answer = "Se trasladó "+message.split(",")[2]+" al bolsillo # "+message.split(",")[1]+" correctamente";
 			break;
 		 	case CONSULTAR:
-			 	
+			 	int balance = bank.checkAccount(message.split(",")[1]);
+			 	answer = "Su saldo en la cuenta #"+message.split(",")[1]+" es de "+balance;
 			break;
 	 }
 		 
