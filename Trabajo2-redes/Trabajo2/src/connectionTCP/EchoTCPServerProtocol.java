@@ -109,18 +109,10 @@ public class EchoTCPServerProtocol {
 	
 	public static void invalidOption(String option) throws OptionException {
 		for (BankOptions bankOp : BankOptions.values()) {
-			if(!option.startsWith(bankOp+"")) {
+			if(!option.contentEquals(bankOp+"")) {
 				throw new OptionException("Por favor introduzca una opcion valida");
 			}
 			
 		}
-		/**
-		if(!(option.contentEquals("ABRIR_CUENTA,")||option.contentEquals("ABRIR_BOLSILLO,")
-			||option.contentEquals("CANCELAR_BOLSILLO,")||option.contentEquals("CANCELAR_CUENTA,")
-			||option.contentEquals("DEPOSITAR,")||option.contentEquals("RETIRAR,")||option.contentEquals("TRASLADAR,")
-			||option.contentEquals("CONSULTAR,")||option.contentEquals("CARGAR,"))) {
-			throw new OptionException("Por favor introduzca una opcion valida");
-		}
-		**/
 	}
 }
