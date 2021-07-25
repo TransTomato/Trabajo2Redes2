@@ -12,6 +12,7 @@ import model.Account;
 import model.Bank;
 import model.BankOptions;
 import model.Pocket;
+import persistence.ObjectReader;
 
 public class EchoTCPServerProtocol {
 	private static PrintWriter toNetwork;
@@ -61,7 +62,7 @@ public class EchoTCPServerProtocol {
 			 	answer = "Su saldo en la cuenta #"+message.split(",")[1]+" es de "+balance;
 			break;
 		 	case CARGAR:
-			 	
+			 	ArrayList<String> transactions = ObjectReader.readTransactions(message.split(",")[1]);
 			 	answer = "Se ha cargado los datos del archivo: "+message.split(",")[1];
 			break;
 	 }
