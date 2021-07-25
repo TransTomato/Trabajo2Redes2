@@ -13,26 +13,30 @@ import model.Bank;
 import model.Pocket;
 
 public class EchoTCPServerProtocol {
-	private static Bank bank;
-
 	private static PrintWriter toNetwork;
 	private static BufferedReader fromNetwork;
 	
-	public static void protocol(Socket socket) throws IOException{
+	public static void protocol(Socket socket, Bank bank) throws IOException{
 		// TODO Auto-generated method stub
 		 System.out.println("Conexión entrante...");
 		 createStreams(socket);
 		 
-		 String option = fromNetwork.readLine();
-		 System.out.println("From client: "+option);
-		 String answer = "Cuenta creada :D, usté es el usuario #"+ bank.accounts.size();
+		 String message = fromNetwork.readLine();
+		 System.out.println("From client: "+message);
+		 String answer = "";
 		 
-		 if(option.length()==1) {
+		 if(message.length()==1) {
 		
 		 
-			 switch(Short.parseShort(option)) {
+			 switch(Short.parseShort(message)) {
 			 	case 1:
-			 		answer = "Cuenta creada :D, usté es el usuario #"+ bank.accounts.size();
+			 		answer = "Indique su primer nombre y primer apellido:";
+			 		toNetwork.println(answer);
+					System.out.println("Sent to client: "+message);
+					message = fromNetwork.readLine();
+					System.out.println("From client: "+message);
+					bank.createAccount(message);
+					answer = "Cuenta creada correctamente. Usted es la cuenta # "+bank.accounts.size();
 			 	break;
 			 	case 2:
 			 			
@@ -62,7 +66,6 @@ public class EchoTCPServerProtocol {
 	}
 	
 	private static void createStreams(Socket socket) throws IOException{
-		bank = new Bank();
 		toNetwork = new PrintWriter(socket.getOutputStream(), true);
 		fromNetwork = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 	}
