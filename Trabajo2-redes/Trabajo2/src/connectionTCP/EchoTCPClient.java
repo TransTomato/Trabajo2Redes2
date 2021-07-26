@@ -29,7 +29,6 @@ public class EchoTCPClient {
 		while(!close)
 		{
 		
-		clientSideSocket = new Socket(SERVER, PORT);
 		System.out.println("Connection approved from Server Side");
 		
 		
