@@ -12,6 +12,7 @@ import java.util.Map;
 import exceptions.ColonException;
 import exceptions.NameException;
 import exceptions.OptionException;
+import exceptions.PocketException;
 import model.Account;
 import model.Bank;
 import model.BankOptions;
@@ -50,9 +51,23 @@ public class EchoTCPServerProtocol {
 					}
 			 		break;
 			 	case ABRIR_BOLSILLO:
-					bank.createPocket(message.split(",")[1]);
-					bank.addTransaction(message.split(",")[0]);
-					answer = "Bolsillo creado con éxito. Bolsillo # b"+message.split(",")[1];
+			 		try {
+			 			invalidColon(message,1);
+			 			int value = Integer.parseInt(message.split(",")[1]);
+			 		   
+			 		
+						bank.createPocket(message.split(",")[1]);
+						bank.addTransaction(message.split(",")[0]);
+						answer = "Bolsillo creado con éxito. Bolsillo # b"+message.split(",")[1];
+			 		}
+			  
+			 		catch (NumberFormatException e) {
+			 			System.out.println("Input String cannot be parsed to Integer.");
+			 		}
+			 		catch(Exception bo) {
+			 			System.out.println(bo.getMessage());
+			 			answer=bo.getMessage();
+			 		}
 			 	break;
 			 	case CANCELAR_BOLSILLO:
 					bank.terminatePocket(message.split(",")[1]);
@@ -140,6 +155,15 @@ public class EchoTCPServerProtocol {
 	public static void invalidColon(String message,int colon) throws ColonException {
 		if(!(message.split(",").length==colon+1)) {
 			throw new ColonException("Por favor ingresar el numero de comas necesarias: "+colon);
+		}
+	}
+	
+	public static void invalidPocket(String message,Bank bank) throws PocketException{
+		if(!bank.accounts.containsKey(message)) {
+			throw new PocketException("La cuenta a la que quiere abrir un bolsillo no existe");
+		}
+		if(!(bank.accounts.get(message).getAccountPocket()==null)) {
+			throw new PocketException("La cuenta ya posee un bolsillo");
 		}
 	}
 	
