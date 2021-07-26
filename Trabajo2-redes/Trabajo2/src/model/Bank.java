@@ -36,7 +36,9 @@ public class Bank {
 	 * @param accountNumber
 	 */
 	public void terminatePocket(String pocketNumber) {
-		accounts.get(pocketNumber.substring(1)).setPocket(null);
+		Account account = accounts.get(pocketNumber.substring(1));
+		this.deposit(pocketNumber.substring(1), account.getAccountPocket().getBalance());
+		account.setPocket(null);
 	}
 	/**
 	 * 
