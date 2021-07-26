@@ -15,6 +15,7 @@ import exceptions.FunarPocketException;
 import exceptions.NameException;
 import exceptions.OptionException;
 import exceptions.PocketException;
+import exceptions.WithdrawException;
 import model.Account;
 import model.Bank;
 import model.BankOptions;
@@ -127,8 +128,22 @@ public class EchoTCPServerProtocol {
 			 		
 			 	break;
 			 	case RETIRAR:
-				 	bank.withdraw(message.split(",")[1], Integer.parseInt(message.split(",")[2]));
-				 	answer = "Se retiró "+message.split(",")[2]+" de la cuenta # "+message.split(",")[1]+" correctamente";
+			 		try {
+			 			invalidColon(message,2);
+			 			int value = Integer.parseInt(message.split(",")[1]);
+			 			int depo = Integer.parseInt(message.split(",")[2]);
+			 			withAccount(message.split(",")[1],message.split(",")[2],bank);
+					 	bank.withdraw(message.split(",")[1], Integer.parseInt(message.split(",")[2]));
+					 	answer = "Se retiró "+message.split(",")[2]+" de la cuenta # "+message.split(",")[1]+" correctamente";
+			 		}
+			 		catch (NumberFormatException e) {
+			 			System.out.println("Por favor ingrese un numero.");
+			 			answer="Por favor ingrese un numero.";
+			 		}
+			 		catch(Exception bo) {
+			 			System.out.println(bo.getMessage());
+			 			answer=bo.getMessage();
+			 		}
 				break;
 			 	case TRASLADAR:
 				 	bank.transfer(message.split(",")[1], Integer.parseInt(message.split(",")[2]));
@@ -236,6 +251,18 @@ public class EchoTCPServerProtocol {
 		}
 		if(Integer.parseInt(valor)<=0) {
 			throw new DepositException("No se puede depositar un valor nulo o negativo");
+		}
+	}
+	
+	public static void withAccount(String message,String valor,Bank bank) throws WithdrawException {
+		if(!bank.accounts.containsKey(message)) {
+			throw new WithdrawException("No se puede retirar de una cuenta que no existe");
+		}
+		if(Integer.parseInt(valor)<=0) {
+			throw new WithdrawException("No se puede retirar un valor nulo o negativo");
+		}
+		if(Integer.parseInt(valor)>bank.accounts.get(message).getBalance()) {
+			throw new WithdrawException("No se puede retirar un valor mayor al de su saldo");
 		}
 	}
 }
