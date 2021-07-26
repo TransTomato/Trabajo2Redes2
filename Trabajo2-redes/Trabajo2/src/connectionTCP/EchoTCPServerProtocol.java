@@ -50,9 +50,24 @@ public class EchoTCPServerProtocol {
 					}
 			 		break;
 			 	case ABRIR_BOLSILLO:
-					bank.createPocket(message.split(",")[1]);
-					bank.addTransaction(message.split(",")[0]);
-					answer = "Bolsillo creado con éxito. Bolsillo # b"+message.split(",")[1];
+			 		try {
+			 			invalidColon(message,1);
+			 			int value = Integer.parseInt(message.split(",")[1]);
+			 			invalidPocket(message.split(",")[1],bank);
+			 		
+						bank.createPocket(message.split(",")[1]);
+						bank.addTransaction(message.split(",")[0]);
+						answer = "Bolsillo creado con éxito. Bolsillo # b"+message.split(",")[1];
+			 		}
+			  
+			 		catch (NumberFormatException e) {
+			 			System.out.println("Input String cannot be parsed to Integer.");
+			 			answer=e.getMessage();
+			 		}
+			 		catch(Exception bo) {
+			 			System.out.println(bo.getMessage());
+			 			answer=bo.getMessage();
+			 		}
 			 	break;
 			 	case CANCELAR_BOLSILLO:
 					bank.terminatePocket(message.split(",")[1]);
