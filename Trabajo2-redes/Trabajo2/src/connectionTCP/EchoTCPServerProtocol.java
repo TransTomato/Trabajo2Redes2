@@ -159,11 +159,11 @@ public class EchoTCPServerProtocol {
 				 	answer = "Se ha cargado los datos del archivo: "+message.split(",")[1];
 				break;
 			 	case LISTAR_TRANSACCIONES:
-			 		String transactions="";
+			 		String transactions = "";
 			 		for (Map.Entry<String, String> transaction : bank.transactions.entrySet()) {
-						transactions+="Fecha-hora:"+transaction.getKey()+" Transaccion: "+transaction.getValue()+"\n";
-					}
-				 	answer = "Lista de transacciones: "+transactions;
+					transactions += "Fecha-hora:"+transaction.getKey()+" Transaccion: "+transaction.getValue()+";";
+			 		}
+			 		answer = "Lista de transacciones: ;"+transactions;
 				break;
 			 }
 		 }

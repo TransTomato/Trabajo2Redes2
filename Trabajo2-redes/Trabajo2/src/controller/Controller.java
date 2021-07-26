@@ -80,14 +80,14 @@ public class Controller implements Initializable{
 		case ABRIR_CUENTA:
 			name = textInput1.getText();
 			ec.createSocket();
-			consoleC = EchoTCPClientProtocol.abrirCuenta(ec.clientSideSocket, name);
+			consoleC = EchoTCPClientProtocol.createAccount(ec.clientSideSocket, name);
 			t = new Text(consoleC);
 			clientConsole.getChildren().add(t);
 		break;
 		case ABRIR_BOLSILLO:
 			account = textInput1.getText();
 			ec.createSocket();
-			consoleC = EchoTCPClientProtocol.abrirBolsillo(ec.clientSideSocket, account);
+			consoleC = EchoTCPClientProtocol.createPocket(ec.clientSideSocket, account);
 			t = new Text(consoleC);
 			clientConsole.getChildren().add(t);
 		break;

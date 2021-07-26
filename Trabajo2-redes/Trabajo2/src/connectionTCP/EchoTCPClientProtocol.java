@@ -37,7 +37,15 @@ public class EchoTCPClientProtocol {
 		String message = SCANNER.nextLine();
 		toNetwork.println(message);
 		System.out.println("SENT TO SERVER: "+message);
-		String fromServer = fromNetwork.readLine();
+		String fromServer = "";
+		
+		if(message.contains(BankOptions.LISTAR_TRANSACCIONES+"")) {
+			for (String transaction : fromNetwork.readLine().split(";")) {
+				fromServer += transaction+"\n";	
+			}
+		}else {
+			fromServer = fromNetwork.readLine();
+		}
 		System.out.println("FROM SERVER: "+fromServer);
 		
 		if(message.contains("CARGAR")) {
@@ -64,7 +72,7 @@ public class EchoTCPClientProtocol {
 	 * @return
 	 * @throws IOException
 	 */
-	public static String abrirCuenta(Socket socket, String name)  {
+	public static String createAccount(Socket socket, String name)  {
 		String console = "",
 				message = BankOptions.ABRIR_CUENTA+","+name;
 		try {
@@ -93,7 +101,7 @@ public class EchoTCPClientProtocol {
 	 * @return
 	 * @throws IOException
 	 */
-	public static String abrirBolsillo(Socket socket, String accountNum)  {
+	public static String createPocket(Socket socket, String accountNum)  {
 		String console = "",
 				message = BankOptions.ABRIR_BOLSILLO+","+accountNum;
 		try {
@@ -300,23 +308,21 @@ public class EchoTCPClientProtocol {
 	public static String listTransfers(Socket socket) {
 		String console = "",
 				message = BankOptions.LISTAR_TRANSACCIONES+"";
-		try {
-			createStreams(socket);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		toNetwork.println(message);
-		console+="SENT TO SERVER:"+message+"\n";
 		String fromServer = "";
 		try {
-			fromServer = fromNetwork.readLine();
+			createStreams(socket);
+		toNetwork.println(message);
+		console+="SENT TO SERVER:"+message+"\n";
+		for (String transaction : fromNetwork.readLine().split(";")) {
+			fromServer += transaction+"\n";	
+		}
+		
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		console+="FROM SERVER: "+fromServer+"\n";
-		
+		console+="FROM SERVER: \n"+fromServer;
 		return console;
 	}
 	/**
