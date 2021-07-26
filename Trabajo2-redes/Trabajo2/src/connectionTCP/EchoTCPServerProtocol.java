@@ -12,6 +12,7 @@ import exceptions.ColonException;
 import exceptions.DepositException;
 import exceptions.FunarAccountException;
 import exceptions.FunarPocketException;
+import exceptions.MoveException;
 import exceptions.NameException;
 import exceptions.OptionException;
 import exceptions.PocketException;
@@ -146,9 +147,24 @@ public class EchoTCPServerProtocol {
 			 		}
 				break;
 			 	case TRASLADAR:
-				 	bank.transfer(message.split(",")[1], Integer.parseInt(message.split(",")[2]));
-				 	bank.addTransaction(message.split(",")[0]);
-				 	answer = "Se trasladó "+message.split(",")[2]+" al bolsillo # "+message.split(",")[1]+" correctamente";
+			 		try {
+			 			invalidColon(message,2);
+			 			int value = Integer.parseInt(message.split(",")[1]);
+			 			int depo = Integer.parseInt(message.split(",")[2]);
+			 			moveMoney(message.split(",")[1],message.split(",")[2],bank);
+					 	bank.transfer(message.split(",")[1], Integer.parseInt(message.split(",")[2]));
+					 	bank.addTransaction(message.split(",")[0]);
+					 	answer = "Se trasladó "+message.split(",")[2]+" al bolsillo # "+message.split(",")[1]+" correctamente";
+			 		}
+			 		catch (NumberFormatException e) {
+			 			System.out.println("Por favor ingrese un numero.");
+			 			answer="Por favor ingrese un numero.";
+			 		}
+			 		catch(Exception bo) {
+			 			System.out.println(bo.getMessage());
+			 			answer=bo.getMessage();
+			 		}
+			 		
 				break;
 			 	case CONSULTAR:
 				 	int balance = bank.checkAccount(message.split(",")[1]);
@@ -249,6 +265,9 @@ public class EchoTCPServerProtocol {
 		if(!bank.accounts.containsKey(message)) {
 			throw new DepositException("No se puede depositar a una cuenta que no existe");
 		}
+		if(bank.accounts.get(message).getAccountPocket()==null) {
+			throw new DepositException("No se puede depositar dienero cuando no existe un bolsillo");
+		}
 		if(Integer.parseInt(valor)<=0) {
 			throw new DepositException("No se puede depositar un valor nulo o negativo");
 		}
@@ -258,11 +277,27 @@ public class EchoTCPServerProtocol {
 		if(!bank.accounts.containsKey(message)) {
 			throw new WithdrawException("No se puede retirar de una cuenta que no existe");
 		}
+
 		if(Integer.parseInt(valor)<=0) {
 			throw new WithdrawException("No se puede retirar un valor nulo o negativo");
 		}
 		if(Integer.parseInt(valor)>bank.accounts.get(message).getBalance()) {
 			throw new WithdrawException("No se puede retirar un valor mayor al de su saldo");
+		}
+	}
+	
+	public static void moveMoney(String message,String valor,Bank bank) throws MoveException {
+		if(!bank.accounts.containsKey(message)) {
+			throw new MoveException("No se puede transladar dienero de una cuenta que no existe");
+		}
+		if(bank.accounts.get(message).getAccountPocket()==null) {
+			throw new MoveException("No se puede transladar dienero cuando no existe un bolsillo");
+		}
+		if(Integer.parseInt(valor)<=0) {
+			throw new MoveException("No se puede trasladar un valor nulo o negativo");
+		}
+		if(Integer.parseInt(valor)>bank.accounts.get(message).getBalance()) {
+			throw new MoveException("No se puede trasladar un valor mayor al de su saldo");
 		}
 	}
 }
