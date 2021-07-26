@@ -16,6 +16,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import model.BankOptions;
 
@@ -60,9 +61,7 @@ public class Controller implements Initializable{
     	String option = comboboxTransaction.getValue().toUpperCase().replace(" ", "_");
     	switch (BankOptions.valueOf(option)) {
 		case ABRIR_CUENTA:
-			label1.setText("Nombre completo:");
-			label2.setDisable(true);
-			textInput2.setDisable(true);
+			String name = textInput1.getText();
 		break;
 		case ABRIR_BOLSILLO:
 			label1.setText("Numero de cuenta:");
@@ -120,6 +119,8 @@ public class Controller implements Initializable{
 			label1.setText("Nombre completo:");
 			label2.setDisable(true);
 			textInput2.setDisable(true);
+			Text t = new Text("Gola \n");
+			clientConsole.getChildren().add(t);
 		break;
 		case ABRIR_BOLSILLO:
 			label1.setText("Numero de cuenta:");
