@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.TextFlow?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <TabPane prefHeight="348.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="Cliente">
+               <content>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Pane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="14.0" layoutY="14.0" prefHeight="16.0" prefWidth="169.0" text="Elija la transaccion:" />
+                              <ComboBox layoutX="183.0" layoutY="10.0" prefHeight="24.0" prefWidth="235.0" />
+                              <TextField layoutX="185.0" layoutY="62.0" prefHeight="24.0" prefWidth="237.0" />
+                              <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="66.0" prefHeight="16.0" prefWidth="159.0" text="Nombre completo:" />
+                              <Separator layoutX="14.0" layoutY="51.0" prefHeight="5.0" prefWidth="572.0" />
+                              <TextField layoutX="185.0" layoutY="103.0" prefHeight="24.0" prefWidth="237.0" />
+                              <Label alignment="CENTER_RIGHT" layoutX="13.0" layoutY="107.0" prefHeight="16.0" prefWidth="161.0" text="Valor:" textAlignment="RIGHT" />
+                              <Button layoutX="323.0" layoutY="159.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="238.0" text="CARGAR ARCHIVO" />
+                              <Button layoutX="55.0" layoutY="159.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="238.0" text="ABRIR CUENTA" />
+                           </children>
+                        </Pane>
+                        <TitledPane collapsible="false" prefHeight="146.0" prefWidth="600.0" text="Consola">
+                           <content>
+                              <TextFlow prefHeight="200.0" prefWidth="200.0" />
+                           </content>
+                        </TitledPane>
+                     </children>
+                  </VBox>
+               </content>
+            </Tab>
+          <Tab text="Servidor">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <TextFlow prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                     </center>
+                  </BorderPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+   <top>
+      <TitledPane alignment="CENTER" animated="false" collapsible="false" prefHeight="13.0" prefWidth="600.0" text="echoTCP - Cliente Servidor - Banco" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS" BorderPane.alignment="CENTER" />
+   </top>
+</BorderPane>
