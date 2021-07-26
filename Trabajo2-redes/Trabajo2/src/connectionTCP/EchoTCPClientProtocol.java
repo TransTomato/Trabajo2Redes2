@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import model.BankOptions;
+import persistence.ObjectReader;
 
 public class EchoTCPClientProtocol {
 	private static final Scanner SCANNER = new Scanner(System.in);
@@ -33,9 +35,18 @@ public class EchoTCPClientProtocol {
 		
 		String message = SCANNER.nextLine();
 		toNetwork.println(message);
-		
 		String fromServer = fromNetwork.readLine();
 		System.out.println("FROM SERVER: "+fromServer);
+		
+		if(message.contains("CARGAR")) {
+			ArrayList<String> transactions = ObjectReader.readTransactions(message.split(",")[1]);
+			for (String transaction : transactions) {
+				createStreams(socket);
+				toNetwork.println(transaction);
+				fromServer = fromNetwork.readLine();
+				System.out.println("FROM SERVER: "+fromServer);
+			}
+		}
 		
 	}
 	

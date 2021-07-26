@@ -74,7 +74,6 @@ public class EchoTCPServerProtocol {
 				 	answer = "Su saldo en la cuenta #"+message.split(",")[1]+" es de "+balance;
 				break;
 			 	case CARGAR:
-				 	ArrayList<String> transactions = ObjectReader.readTransactions(message.split(",")[1]);
 				 	answer = "Se ha cargado los datos del archivo: "+message.split(",")[1];
 				break;
 			 }
@@ -107,12 +106,13 @@ public class EchoTCPServerProtocol {
 	      }
 	}
 	
-	public static void invalidOption(String option) throws OptionException {
+	public static boolean invalidOption(String option) throws OptionException {
 		for (BankOptions bankOp : BankOptions.values()) {
-			if(!option.contentEquals(bankOp+"")) {
-				throw new OptionException("Por favor introduzca una opcion valida");
+			if(option.contentEquals(bankOp+"")) {
+				return false;
 			}
 			
 		}
+		throw new OptionException("Por favor introduzca una opcion valida");
 	}
 }

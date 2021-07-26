@@ -17,7 +17,7 @@ public class Bank {
 	 */
 	public void createAccount(String name) {
 		Account account = new Account(name);
-		accounts.put(""+(accounts.size()+1), account);
+		accounts.put(""+(accounts.size()), account);
 	}
 	/**
 	 * 
