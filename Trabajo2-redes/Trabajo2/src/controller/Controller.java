@@ -57,7 +57,54 @@ public class Controller implements Initializable{
 
     @FXML
     void transaction(ActionEvent event) {
-    	
+    	String option = comboboxTransaction.getValue().toUpperCase().replace(" ", "_");
+    	switch (BankOptions.valueOf(option)) {
+		case ABRIR_CUENTA:
+			label1.setText("Nombre completo:");
+			label2.setDisable(true);
+			textInput2.setDisable(true);
+		break;
+		case ABRIR_BOLSILLO:
+			label1.setText("Numero de cuenta:");
+			label2.setDisable(true);
+			textInput2.setDisable(true);
+		break;
+		case CANCELAR_BOLSILLO:
+			label1.setText("Numero de bolsillo:");
+			label2.setDisable(true);
+			textInput2.setDisable(true);
+		break;
+		case CANCELAR_CUENTA:
+			label1.setText("# de cuenta:");
+			label2.setDisable(true);
+			textInput2.setDisable(true);
+	 	break;
+	 	case DEPOSITAR:
+	 		label1.setText("Numero de cuenta:");
+			label2.setText("Valor:");
+	 	break;
+	 	case RETIRAR:
+	 		label1.setText("Numero de cuenta:");
+			label2.setText("Valor:");
+		break;
+	 	case TRASLADAR:
+	 		label1.setText("Numero de cuenta:");
+			label2.setText("Valor:");
+		break;
+	 	case CONSULTAR:
+	 		label1.setText("Numero de cuenta/bolsillo:");
+			label2.setDisable(true);
+			textInput2.setDisable(true);
+		break;
+	 	case LISTAR_TRANSACCIONES:
+	 		label1.setDisable(true);
+			label2.setDisable(true);
+			textInput1.setDisable(true);
+			textInput2.setDisable(true);
+		break;
+		default:
+			break;
+		}
     }
     
 
