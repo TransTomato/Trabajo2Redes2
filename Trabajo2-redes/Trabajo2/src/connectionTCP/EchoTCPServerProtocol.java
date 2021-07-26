@@ -63,8 +63,8 @@ public class EchoTCPServerProtocol {
 			 		}
 			  
 			 		catch (NumberFormatException e) {
-			 			System.out.println("Input String cannot be parsed to Integer.");
-			 			answer=e.getMessage();
+			 			System.out.println("Por favor ingrese un numero.");
+			 			answer="Por favor ingrese un numero."
 			 		}
 			 		catch(Exception bo) {
 			 			System.out.println(bo.getMessage());
@@ -81,8 +81,8 @@ public class EchoTCPServerProtocol {
 						answer = "Bolsillo cancelado con éxito";
 			 		}
 			 		catch (NumberFormatException e) {
-			 			System.out.println("Input String cannot be parsed to Integer.");
-			 			answer=e.getMessage();
+			 			System.out.println("Por favor ingrese un numero.");
+			 			answer="Por favor ingrese un numero."
 			 		}
 			 		catch(Exception bo) {
 			 			System.out.println(bo.getMessage());
