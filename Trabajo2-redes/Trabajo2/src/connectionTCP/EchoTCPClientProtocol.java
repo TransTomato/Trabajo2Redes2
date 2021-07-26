@@ -35,6 +35,7 @@ public class EchoTCPClientProtocol {
 		
 		String message = SCANNER.nextLine();
 		toNetwork.println(message);
+		System.out.println("SENT TO SERVER: "+message);
 		String fromServer = fromNetwork.readLine();
 		System.out.println("FROM SERVER: "+fromServer);
 		
