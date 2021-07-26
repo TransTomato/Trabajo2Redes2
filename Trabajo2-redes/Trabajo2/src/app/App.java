@@ -14,7 +14,7 @@ public class App extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader();
-			fxmlLoader.setLocation(new URL("src/view/ClientServerGui.fxml"));
+			fxmlLoader.setLocation(getClass().getResource("src/view/ClientServerGui.fxml"));
 			Scene scene = new Scene(fxmlLoader.load());
 			Stage stage = new Stage();
 			stage.setScene(scene);
