@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import exceptions.ColonException;
+import exceptions.ConsultException;
 import exceptions.DepositException;
 import exceptions.FunarAccountException;
 import exceptions.FunarPocketException;
@@ -167,9 +168,22 @@ public class EchoTCPServerProtocol {
 			 		
 				break;
 			 	case CONSULTAR:
-				 	int balance = bank.checkAccount(message.split(",")[1]);
-				 	bank.addTransaction(message.split(",")[0]);
-				 	answer = "Su saldo en la cuenta #"+message.split(",")[1]+" es de "+balance;
+			 		try {
+			 			invalidColon(message,1);
+			 			int value = Integer.parseInt(message.split(",")[1].replaceFirst("b", ""));
+			 			consultMoney(message.split(",")[1],bank);
+					 	int balance = bank.checkAccount(message.split(",")[1]);
+					 	bank.addTransaction(message.split(",")[0]);
+					 	answer = "Su saldo en la cuenta #"+message.split(",")[1]+" es de "+balance;
+			 		}
+			 		catch (NumberFormatException e) {
+			 			System.out.println("Por favor ingrese un numero.");
+			 			answer="Por favor ingrese un numero.";
+			 		}
+			 		catch(Exception bo) {
+			 			System.out.println(bo.getMessage());
+			 			answer=bo.getMessage();
+			 		}
 				break;
 			 	case CARGAR:
 				 	answer = "Se ha cargado los datos del archivo: "+message.split(",")[1];
@@ -300,4 +314,18 @@ public class EchoTCPServerProtocol {
 			throw new MoveException("No se puede trasladar un valor mayor al de su saldo");
 		}
 	}
+	
+	public static void consultMoney(String message,Bank bank) throws ConsultException {
+		if(message.charAt(0)=='b') {
+			if(bank.accounts.get(message.replaceFirst("b", "")).getAccountPocket()==null) {
+				throw new ConsultException("No se puede consultar dienero de un bolsillo que no existe");
+			}
+		}
+		else{
+			if(!bank.accounts.containsKey(message)) {
+			throw new ConsultException("No se puede consultar dienero de una cuenta que no existe");
+			}
+		}
+	}
+	
 }
