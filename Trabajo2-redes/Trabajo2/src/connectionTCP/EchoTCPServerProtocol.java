@@ -64,7 +64,7 @@ public class EchoTCPServerProtocol {
 			  
 			 		catch (NumberFormatException e) {
 			 			System.out.println("Por favor ingrese un numero.");
-			 			answer="Por favor ingrese un numero."
+			 			answer="Por favor ingrese un numero.";
 			 		}
 			 		catch(Exception bo) {
 			 			System.out.println(bo.getMessage());
@@ -82,7 +82,7 @@ public class EchoTCPServerProtocol {
 			 		}
 			 		catch (NumberFormatException e) {
 			 			System.out.println("Por favor ingrese un numero.");
-			 			answer="Por favor ingrese un numero."
+			 			answer="Por favor ingrese un numero.";
 			 		}
 			 		catch(Exception bo) {
 			 			System.out.println(bo.getMessage());
