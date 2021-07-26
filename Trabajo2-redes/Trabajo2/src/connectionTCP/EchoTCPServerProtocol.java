@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import exceptions.ColonException;
+import exceptions.FunarPocketException;
 import exceptions.NameException;
 import exceptions.OptionException;
 import exceptions.PocketException;
@@ -71,9 +72,22 @@ public class EchoTCPServerProtocol {
 			 		}
 			 	break;
 			 	case CANCELAR_BOLSILLO:
-					bank.terminatePocket(message.split(",")[1]);
-					bank.addTransaction(message.split(",")[0]);
-					answer = "Bolsillo cancelado con éxito";
+			 		try {
+			 			invalidColon(message,1);
+			 			int value = Integer.parseInt(message.split(",")[1]);
+			 			funarPocket(message.split(",")[1],bank);
+						bank.terminatePocket(message.split(",")[1]);
+						bank.addTransaction(message.split(",")[0]);
+						answer = "Bolsillo cancelado con éxito";
+			 		}
+			 		catch (NumberFormatException e) {
+			 			System.out.println("Input String cannot be parsed to Integer.");
+			 			answer=e.getMessage();
+			 		}
+			 		catch(Exception bo) {
+			 			System.out.println(bo.getMessage());
+			 			answer=bo.getMessage();
+			 		}
 			 	break;
 			 	case CANCELAR_CUENTA:
 			 		bank.terminateAccount(message.split(",")[1]);
@@ -165,6 +179,15 @@ public class EchoTCPServerProtocol {
 		}
 		if(!(bank.accounts.get(message).getAccountPocket()==null)) {
 			throw new PocketException("La cuenta ya posee un bolsillo");
+		}
+	}
+	
+	public static void funarPocket(String message,Bank bank) throws FunarPocketException {
+		if(!bank.accounts.containsKey(message)) {
+			throw new FunarPocketException("La cuenta a la que quiere cerrar un bolsillo no existe");
+		}
+		if((bank.accounts.get(message).getAccountPocket()==null)) {
+			throw new FunarPocketException("La cuenta no posee un bolsillo");
 		}
 	}
 }
