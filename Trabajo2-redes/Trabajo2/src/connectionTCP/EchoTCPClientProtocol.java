@@ -31,7 +31,8 @@ public class EchoTCPClientProtocol {
 				+ "\n -. RETIRAR,<numero cuenta>,<valor>"
 				+ "\n -. TRASLADAR,<numero cuenta>,<valor>"
 				+ "\n -. CONSULTAR,<numero cuenta>"
-				+ "\n -. CARGAR,<nombre del archivo>");
+				+ "\n -. CARGAR,<nombre del archivo>"
+				+ "\n -. LISTAR_TRANSACCIONES");
 		
 		String message = SCANNER.nextLine();
 		toNetwork.println(message);

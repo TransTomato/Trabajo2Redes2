@@ -40,6 +40,7 @@ public class EchoTCPServerProtocol {
 			 			invalidColon(message,1);
 			 			invalidName(message.split(",")[1],bank);
 			 			bank.createAccount(message.split(",")[1]);
+			 			bank.addTransaction(message.split(",")[0]);
 						answer = "Cuenta creada correctamente. Usted es la cuenta # "+bank.accounts.size();
 						
 			 		}
@@ -50,18 +51,22 @@ public class EchoTCPServerProtocol {
 			 		break;
 			 	case ABRIR_BOLSILLO:
 					bank.createPocket(message.split(",")[1]);
+					bank.addTransaction(message.split(",")[0]);
 					answer = "Bolsillo creado con éxito. Bolsillo # b"+message.split(",")[1];
 			 	break;
 			 	case CANCELAR_BOLSILLO:
 					bank.terminatePocket(message.split(",")[1]);
+					bank.addTransaction(message.split(",")[0]);
 					answer = "Bolsillo cancelado con éxito";
 			 	break;
 			 	case CANCELAR_CUENTA:
 			 		bank.terminateAccount(message.split(",")[1]);
+			 		bank.addTransaction(message.split(",")[0]);
 			 		answer = "Cuenta # "+message.split(",")[1]+" cancelada exitosamente";
 			 	break;
 			 	case DEPOSITAR:
 			 		bank.deposit(message.split(",")[1], Integer.parseInt(message.split(",")[2]));
+			 		bank.addTransaction(message.split(",")[0]);
 			 		answer = "Se depositó "+message.split(",")[2]+" en la cuenta # "+message.split(",")[1]+" correctamente";
 			 	break;
 			 	case RETIRAR:
@@ -70,14 +75,23 @@ public class EchoTCPServerProtocol {
 				break;
 			 	case TRASLADAR:
 				 	bank.transfer(message.split(",")[1], Integer.parseInt(message.split(",")[2]));
+				 	bank.addTransaction(message.split(",")[0]);
 				 	answer = "Se trasladó "+message.split(",")[2]+" al bolsillo # "+message.split(",")[1]+" correctamente";
 				break;
 			 	case CONSULTAR:
 				 	int balance = bank.checkAccount(message.split(",")[1]);
+				 	bank.addTransaction(message.split(",")[0]);
 				 	answer = "Su saldo en la cuenta #"+message.split(",")[1]+" es de "+balance;
 				break;
 			 	case CARGAR:
 				 	answer = "Se ha cargado los datos del archivo: "+message.split(",")[1];
+				break;
+			 	case LISTAR_TRANSACCIONES:
+			 		String transactions="";
+			 		for (Map.Entry<String, String> transaction : bank.transactions.entrySet()) {
+						transactions+="Fecha-hora:"+transaction.getKey()+" Transaccion: "+transaction.getValue()+"\n";
+					}
+				 	answer = "Lista de transacciones: "+transactions;
 				break;
 			 }
 		 }

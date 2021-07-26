@@ -1,5 +1,10 @@
 package connectionTCP;
-
+/**
+ * 			Universidad del Quindío
+ * @author	Michelle Quintero Hernández
+ *			José Manuel Rojas Tovar
+ *			Brayan Tabares Hidalgo
+ */
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;

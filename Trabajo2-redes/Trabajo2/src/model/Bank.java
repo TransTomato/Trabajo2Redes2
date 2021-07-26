@@ -1,4 +1,6 @@
 package model;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 /**
  * 			Universidad del Quindío
  * @author	Michelle Quintero Hernández
@@ -10,6 +12,7 @@ import java.util.HashMap;
 public class Bank {
 
 	public HashMap<String, Account> accounts = new HashMap<String, Account>();
+	public HashMap<String, String> transactions = new HashMap<String, String>();
 	
 	/**
 	 * 
@@ -89,5 +92,10 @@ public class Bank {
 		}
 		 account = accounts.get(accountNumber);
 		return account.getBalance();
+	}
+	public void addTransaction(String transaction) {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss");  
+		LocalDateTime now = LocalDateTime.now();  
+		transactions.put(dtf.format(now), transaction);
 	}
 }

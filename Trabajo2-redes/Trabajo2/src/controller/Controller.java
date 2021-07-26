@@ -1,13 +1,22 @@
 package controller;
+/**
+ * Sample Skeleton for 'Client&ServerGui.fxml' Controller Class
+ */
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.text.TextFlow;
 
-public class Controller {
+public class Controller implements Initializable{
 
     @FXML // fx:id="comboboxTransaction"
     private ComboBox<?> comboboxTransaction; // Value injected by FXMLLoader
@@ -36,5 +45,25 @@ public class Controller {
     @FXML // fx:id="serverConsole"
     private TextFlow serverConsole; // Value injected by FXMLLoader
 
-}
+    @FXML
+    void loadFile(ActionEvent event) {
+    	System.out.println("Hola");
+    }
 
+    @FXML
+    void transaction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void updateTransaction(ScrollEvent event) {
+    	
+    }
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		
+		
+	}
+
+}

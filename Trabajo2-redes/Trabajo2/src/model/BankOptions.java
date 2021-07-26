@@ -15,6 +15,7 @@ public enum BankOptions {
 	RETIRAR,
 	TRASLADAR,
 	CONSULTAR,
-	CARGAR
+	CARGAR,
+	LISTAR_TRANSACCIONES
 	
 }
