@@ -42,7 +42,7 @@ public class EchoTCPServerProtocol {
 			 			invalidName(message.split(",")[1],bank);
 			 			bank.createAccount(message.split(",")[1]);
 			 			bank.addTransaction(message.split(",")[0]);
-						answer = "Cuenta creada correctamente. Usted es la cuenta # "+bank.accounts.size();
+						answer = "Cuenta creada correctamente. Usted es la cuenta # "+(bank.accounts.size()-1);
 						
 			 		}
 					catch(Exception ne) {
