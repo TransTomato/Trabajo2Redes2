@@ -7,7 +7,9 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
+import exceptions.ColonException;
 import exceptions.NameException;
 import exceptions.OptionException;
 import model.Account;
@@ -30,17 +32,18 @@ public class EchoTCPServerProtocol {
 		 String answer = "";
 		
 		 try {
+			
 			invalidOption(message.split(",")[0]);
 			 switch(BankOptions.valueOf(message.split(",")[0])) {
 			 	case ABRIR_CUENTA:
 			 		try {
-			 			
-			 			invalidName(message.split(",")[1]);
+			 			invalidColon(message,1);
+			 			invalidName(message.split(",")[1],bank);
 			 			bank.createAccount(message.split(",")[1]);
 						answer = "Cuenta creada correctamente. Usted es la cuenta # "+bank.accounts.size();
 						
 			 		}
-					catch(NameException ne) {
+					catch(Exception ne) {
 						System.out.println(ne.getMessage());
 						answer= ne.getMessage();
 					}
@@ -93,16 +96,20 @@ public class EchoTCPServerProtocol {
 		fromNetwork = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 	}
 
-	public static void invalidName(String name) throws NameException {
+	public static void invalidName(String name,Bank bank) throws NameException {
 		char[] chars = name.toCharArray();   
 	      for(char c : chars){
 	         if(Character.isDigit(c)){
 	            throw new NameException("El nombre no puede contener numeros");
 	         }
 	      }
-	      if(name.indexOf(' ')==0) {
-	    	  throw new NameException("El nombre no puede empezar con un espacios");
-	    	  
+	  
+	      HashMap<String,Account> selects=bank.accounts;
+	      for(Account account: selects.values()) {
+	    	  String clone=account.getName();
+	    	  if(clone.replaceAll(" ", "").toLowerCase().equals(name.replaceAll(" ", "").toLowerCase())) {   		  
+	    		  throw new NameException("El nombre ingresado ya esta en el sistema");
+	    	  }
 	      }
 	}
 	
@@ -115,4 +122,11 @@ public class EchoTCPServerProtocol {
 		}
 		throw new OptionException("Por favor introduzca una opcion valida");
 	}
+	
+	public static void invalidColon(String message,int colon) throws ColonException {
+		if(!(message.split(",").length==colon+1)) {
+			throw new ColonException("Por favor ingresar el numero de comas necesarias: "+colon);
+		}
+	}
+	
 }
