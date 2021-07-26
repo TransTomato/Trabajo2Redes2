@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -36,7 +37,11 @@
                         </Pane>
                         <TitledPane collapsible="false" prefHeight="146.0" prefWidth="600.0" text="Consola">
                            <content>
-                              <TextFlow fx:id="clientConsole" prefHeight="200.0" prefWidth="200.0" />
+                              <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                                 <content>
+                                    <TextFlow fx:id="clientConsole" prefHeight="200.0" prefWidth="586.0" />
+                                 </content>
+                              </ScrollPane>
                            </content>
                         </TitledPane>
                      </children>
@@ -47,7 +52,11 @@
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <center>
-                        <TextFlow fx:id="serverConsole" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                        <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <content>
+                              <TextFlow fx:id="serverConsole" prefHeight="326.0" prefWidth="583.0" />
+                           </content>
+                        </ScrollPane>
                      </center>
                   </BorderPane>
                </content>

@@ -3,10 +3,12 @@ package controller;
  * Sample Skeleton for 'Client&ServerGui.fxml' Controller Class
  */
 
+import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import connectionTCP.EchoTCPClient;
+import connectionTCP.EchoTCPClientProtocol;
 import connectionTCP.EchoTCPServer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,7 +19,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import model.BankOptions;
@@ -53,6 +54,11 @@ public class Controller implements Initializable{
     
     private ObservableList<String> optionsTransaction = FXCollections.observableArrayList();
 
+    private Thread t1;
+    private EchoTCPServer es;
+    private EchoTCPClient ec;
+    
+    
     @FXML
     void loadFile(ActionEvent event) {
     	System.out.println("Hola");
@@ -60,15 +66,21 @@ public class Controller implements Initializable{
 
     @FXML
     void transaction(ActionEvent event) {
+    	String consoleC ="";
+    	Text t = null;
     	String option = comboboxTransaction.getValue().toUpperCase().replace(" ", "_");
     	switch (BankOptions.valueOf(option)) {
 		case ABRIR_CUENTA:
 			String name = textInput1.getText();
+			consoleC = EchoTCPClientProtocol.abrirCuenta(ec.clientSideSocket, name);
+			t = new Text(consoleC);
+			clientConsole.getChildren().add(t);
 		break;
 		case ABRIR_BOLSILLO:
-			label1.setText("Numero de cuenta:");
-			label2.setDisable(true);
-			textInput2.setDisable(true);
+			String account = textInput1.getText();
+			consoleC = EchoTCPClientProtocol.abrirBolsillo(ec.clientSideSocket, account);
+			t = new Text(consoleC);
+			clientConsole.getChildren().add(t);
 		break;
 		case CANCELAR_BOLSILLO:
 			label1.setText("Numero de bolsillo:");
@@ -115,14 +127,13 @@ public class Controller implements Initializable{
     	label2.setDisable(false);
     	textInput1.setDisable(false);
     	textInput2.setDisable(false);
+    	transactionButton.setDisable(false);
     	String option = comboboxTransaction.getValue().toUpperCase().replace(" ", "_");
     	switch (BankOptions.valueOf(option)) {
 		case ABRIR_CUENTA:
 			label1.setText("Nombre completo:");
 			label2.setDisable(true);
 			textInput2.setDisable(true);
-			Text t = new Text("Gola \n");
-			clientConsole.getChildren().add(t);
 		break;
 		case ABRIR_BOLSILLO:
 			label1.setText("Numero de cuenta:");
@@ -172,14 +183,16 @@ public class Controller implements Initializable{
 		
 		//Initialize the EchoTCPClient and EchoTCPServer
 		
-		EchoTCPServer es = new EchoTCPServer();
-		EchoTCPClient ec = new EchoTCPClient();
-		
-		Thread t1 = new Thread(es);
-		Thread t2 = new Thread(ec);
-		
+		es = new EchoTCPServer();
+		t1 = new Thread(es);
 		t1.start();
-		t2.start();
+		
+		ec = new EchoTCPClient();
+		
+		
+		
+		
+		
 		
 		for (BankOptions op : BankOptions.values()) {
 			if(op!=BankOptions.CARGAR)
