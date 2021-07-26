@@ -12,6 +12,7 @@ import java.util.Map;
 import exceptions.ColonException;
 import exceptions.NameException;
 import exceptions.OptionException;
+import exceptions.PocketException;
 import model.Account;
 import model.Bank;
 import model.BankOptions;
@@ -158,4 +159,12 @@ public class EchoTCPServerProtocol {
 		}
 	}
 	
+	public static void invalidPocket(String message,Bank bank) throws PocketException{
+		if(!bank.accounts.containsKey(message)) {
+			throw new PocketException("La cuenta a la que quiere abrir un bolsillo no existe");
+		}
+		if(!(bank.accounts.get(message).getAccountPocket()==null)) {
+			throw new PocketException("La cuenta ya posee un bolsillo");
+		}
+	}
 }
