@@ -2,7 +2,7 @@ package connectionTCP;
 
 import java.net.Socket;
 
-public class EchoTCPClient {
+public class EchoTCPClient implements Runnable{
 	
 	public static final int PORT = 3400;
 	public static final String SERVER = "localhost";
@@ -30,6 +30,17 @@ public class EchoTCPClient {
 	public static void main(String args[]) throws Exception{
 		EchoTCPClient ec = new EchoTCPClient();
 		ec.init();
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		try {
+			this.init();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

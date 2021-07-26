@@ -6,6 +6,8 @@ package controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import connectionTCP.EchoTCPClient;
+import connectionTCP.EchoTCPServer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -167,6 +169,17 @@ public class Controller implements Initializable{
     
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
+		//Initialize the EchoTCPClient and EchoTCPServer
+		
+		EchoTCPServer es = new EchoTCPServer();
+		EchoTCPClient ec = new EchoTCPClient();
+		
+		Thread t1 = new Thread(es);
+		Thread t2 = new Thread(ec);
+		
+		t1.start();
+		t2.start();
 		
 		for (BankOptions op : BankOptions.values()) {
 			if(op!=BankOptions.CARGAR)

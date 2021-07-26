@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import model.Account;
 import model.Bank;
 
-public class EchoTCPServer {
+public class EchoTCPServer implements Runnable{
 	
 	public static final int PORT = 3400;
 	
@@ -25,6 +25,7 @@ public class EchoTCPServer {
 	}
 	
 	public void init() throws Exception {
+		bank = new Bank();
 		listener = new ServerSocket(PORT);
 		
 		while(true){
@@ -37,8 +38,18 @@ public class EchoTCPServer {
 	
 	public static void main(String args[]) throws Exception {
 		EchoTCPServer es = new EchoTCPServer();
-		bank = new Bank();
 		es.init();
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		try {
+			this.init();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
