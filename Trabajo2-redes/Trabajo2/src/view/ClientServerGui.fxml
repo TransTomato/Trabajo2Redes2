@@ -32,7 +32,7 @@
                               <TextField fx:id="textInput2" disable="true" layoutX="185.0" layoutY="103.0" prefHeight="24.0" prefWidth="237.0" />
                               <Label fx:id="label2" alignment="CENTER_RIGHT" disable="true" layoutX="13.0" layoutY="107.0" prefHeight="16.0" prefWidth="161.0" text="Valor:" textAlignment="RIGHT" />
                               <Button fx:id="fileButton" layoutX="323.0" layoutY="159.0" mnemonicParsing="false" onAction="#loadFile" prefHeight="26.0" prefWidth="238.0" text="CARGAR ARCHIVO" />
-                              <Button fx:id="transactionButton" disable="true" layoutX="55.0" layoutY="159.0" mnemonicParsing="false" onAction="#transaction" prefHeight="26.0" prefWidth="238.0" text="ABRIR CUENTA" />
+                              <Button fx:id="transactionButton" disable="true" layoutX="55.0" layoutY="159.0" mnemonicParsing="false" onAction="#transaction" prefHeight="26.0" prefWidth="238.0" text="EJECUTAR TRANSACCION" />
                            </children>
                         </Pane>
                         <TitledPane collapsible="false" prefHeight="146.0" prefWidth="600.0" text="Consola">

@@ -111,7 +111,7 @@ public class EchoTCPClientProtocol {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		console+="FROM SERVER: "+fromServer;
+		console+="FROM SERVER: "+fromServer+"\n";
 		
 		return console;
 	}
@@ -140,7 +140,7 @@ public class EchoTCPClientProtocol {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		console+="FROM SERVER: "+fromServer;
+		console+="FROM SERVER: "+fromServer+"\n";
 		
 		return console;
 	}
@@ -170,7 +170,7 @@ public class EchoTCPClientProtocol {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		console+="FROM SERVER: "+fromServer;
+		console+="FROM SERVER: "+fromServer+"\n";
 		
 		return console;
 	}
@@ -200,7 +200,7 @@ public class EchoTCPClientProtocol {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		console+="FROM SERVER: "+fromServer;
+		console+="FROM SERVER: "+fromServer+"\n";
 		
 		return console;
 	}
@@ -211,7 +211,7 @@ public class EchoTCPClientProtocol {
 	 * @return
 	 * @throws IOException
 	 */
-	public static String cancelarBolsillo(Socket socket, String pocketNum) {
+	public static String terminatePocket(Socket socket, String pocketNum) {
 		String console = "",
 				message = BankOptions.CANCELAR_BOLSILLO+","+pocketNum;
 		try {
@@ -229,7 +229,7 @@ public class EchoTCPClientProtocol {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		console+="FROM SERVER: "+fromServer;
+		console+="FROM SERVER: "+fromServer+"\n";
 		
 		return console;
 	}
@@ -240,7 +240,7 @@ public class EchoTCPClientProtocol {
 	 * @return
 	 * @throws IOException
 	 */
-	public static String cancelarCuenta(Socket socket, String accountNum) {
+	public static String terminateAccount(Socket socket, String accountNum) {
 		String console = "",
 				message = BankOptions.CANCELAR_CUENTA+","+accountNum;
 		try {
@@ -258,7 +258,7 @@ public class EchoTCPClientProtocol {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		console+="FROM SERVER: "+fromServer;
+		console+="FROM SERVER: "+fromServer+"\n";
 		
 		return console;
 	}
@@ -287,7 +287,7 @@ public class EchoTCPClientProtocol {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		console+="FROM SERVER: "+fromServer;
+		console+="FROM SERVER: "+fromServer+"\n";
 		
 		return console;
 	}
@@ -315,7 +315,7 @@ public class EchoTCPClientProtocol {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		console+="FROM SERVER: "+fromServer;
+		console+="FROM SERVER: "+fromServer+"\n";
 		
 		return console;
 	}
@@ -325,7 +325,7 @@ public class EchoTCPClientProtocol {
 	 * @return
 	 * @throws IOException
 	 */
-	public static String cargarArchivos(Socket socket) {
+	public static String loadFile(Socket socket) {
 		String console = "";
 		try {
 			createStreams(socket);
@@ -350,7 +350,7 @@ public class EchoTCPClientProtocol {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			console+="FROM SERVER: "+fromServer;
+			console+="FROM SERVER: "+fromServer+"\n";
 		}
 		return console;
 	}

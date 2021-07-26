@@ -14,21 +14,12 @@ public class EchoTCPClient {
 
 	public EchoTCPClient() {
 		System.out.println("File TCP Client...");
-		try {
-			clientSideSocket = new Socket(SERVER,PORT);
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	public void init() throws Exception{
 		while(!close)
 		{
-		
+		createSocket();
 		System.out.println("Connection approved from Server Side");
 		
 		
@@ -36,6 +27,15 @@ public class EchoTCPClient {
 		}
 		
 		clientSideSocket.close();
+	}
+	
+	public void createSocket() {
+		try {
+			clientSideSocket = new Socket(SERVER,PORT);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static void main(String args[]) throws Exception{
