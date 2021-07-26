@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import exceptions.ColonException;
+import exceptions.FunarAccountException;
 import exceptions.FunarPocketException;
 import exceptions.NameException;
 import exceptions.OptionException;
@@ -87,9 +88,22 @@ public class EchoTCPServerProtocol {
 			 		}
 			 	break;
 			 	case CANCELAR_CUENTA:
-			 		bank.terminateAccount(message.split(",")[1]);
-			 		bank.addTransaction(message.split(",")[0]);
-			 		answer = "Cuenta # "+message.split(",")[1]+" cancelada exitosamente";
+			 		try {
+			 			invalidColon(message,1);
+			 			int value = Integer.parseInt(message.split(",")[1]);
+			 			funarAccount(message.split(",")[1],bank);
+				 		bank.terminateAccount(message.split(",")[1]);
+				 		bank.addTransaction(message.split(",")[0]);
+				 		answer = "Cuenta # "+message.split(",")[1]+" cancelada exitosamente";
+			 		}
+			 		catch (NumberFormatException e) {
+			 			System.out.println("Por favor ingrese un numero.");
+			 			answer="Por favor ingrese un numero.";
+			 		}
+			 		catch(Exception bo) {
+			 			System.out.println(bo.getMessage());
+			 			answer=bo.getMessage();
+			 		}
 			 	break;
 			 	case DEPOSITAR:
 			 		bank.deposit(message.split(",")[1], Integer.parseInt(message.split(",")[2]));
@@ -185,6 +199,18 @@ public class EchoTCPServerProtocol {
 		}
 		if((bank.accounts.get(message).getAccountPocket()==null)) {
 			throw new FunarPocketException("La cuenta no posee un bolsillo");
+		}
+	}
+	
+	public static void funarAccount(String message,Bank bank) throws FunarAccountException {
+		if(!bank.accounts.containsKey(message)) {
+			throw new FunarAccountException("La cuenta que quiere cerrar no existe");
+		}
+		if(!(bank.accounts.get(message).getAccountPocket()==null)) {
+			throw new FunarAccountException("No se puede cerrar la cuenta porque posee un bolsillo");
+		}
+		if(bank.accounts.get(message).getBalance()>0) {
+			throw new FunarAccountException("No se puede cerrar la cuenta porque no tiene un saldo de 0");
 		}
 	}
 }
