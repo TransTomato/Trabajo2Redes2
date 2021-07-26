@@ -1,14 +1,16 @@
 package connectionTCP;
 
+import java.io.IOException;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
-public class EchoTCPClient implements Runnable{
+public class EchoTCPClient {
 	
 	public static final int PORT = 3400;
 	public static final String SERVER = "localhost";
 	public static boolean close = false;
 	
-	private Socket clientSideSocket;
+	public Socket clientSideSocket;
 
 	public EchoTCPClient() {
 		System.out.println("File TCP Client...");
@@ -17,9 +19,9 @@ public class EchoTCPClient implements Runnable{
 	public void init() throws Exception{
 		while(!close)
 		{
-		
-		clientSideSocket = new Socket(SERVER, PORT);
+		createSocket();
 		System.out.println("Connection approved from Server Side");
+		
 		
 		EchoTCPClientProtocol.protocol(clientSideSocket);
 		}
@@ -27,20 +29,19 @@ public class EchoTCPClient implements Runnable{
 		clientSideSocket.close();
 	}
 	
-	public static void main(String args[]) throws Exception{
-		EchoTCPClient ec = new EchoTCPClient();
-		ec.init();
-	}
-
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
+	public void createSocket() {
 		try {
-			this.init();
-		} catch (Exception e) {
+			clientSideSocket = new Socket(SERVER,PORT);
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	
+	public static void main(String args[]) throws Exception{
+		EchoTCPClient ec = new EchoTCPClient();
+		ec.init();
+	}
+	
 	
 }

@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -31,12 +32,16 @@
                               <TextField fx:id="textInput2" disable="true" layoutX="185.0" layoutY="103.0" prefHeight="24.0" prefWidth="237.0" />
                               <Label fx:id="label2" alignment="CENTER_RIGHT" disable="true" layoutX="13.0" layoutY="107.0" prefHeight="16.0" prefWidth="161.0" text="Valor:" textAlignment="RIGHT" />
                               <Button fx:id="fileButton" layoutX="323.0" layoutY="159.0" mnemonicParsing="false" onAction="#loadFile" prefHeight="26.0" prefWidth="238.0" text="CARGAR ARCHIVO" />
-                              <Button fx:id="transactionButton" disable="true" layoutX="55.0" layoutY="159.0" mnemonicParsing="false" onAction="#transaction" prefHeight="26.0" prefWidth="238.0" text="ABRIR CUENTA" />
+                              <Button fx:id="transactionButton" disable="true" layoutX="55.0" layoutY="159.0" mnemonicParsing="false" onAction="#transaction" prefHeight="26.0" prefWidth="238.0" text="EJECUTAR TRANSACCION" />
                            </children>
                         </Pane>
                         <TitledPane collapsible="false" prefHeight="146.0" prefWidth="600.0" text="Consola">
                            <content>
-                              <TextFlow fx:id="clientConsole" prefHeight="200.0" prefWidth="200.0" />
+                              <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                                 <content>
+                                    <TextFlow fx:id="clientConsole" prefHeight="200.0" prefWidth="586.0" />
+                                 </content>
+                              </ScrollPane>
                            </content>
                         </TitledPane>
                      </children>
@@ -47,7 +52,11 @@
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <center>
-                        <TextFlow fx:id="serverConsole" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                        <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <content>
+                              <TextFlow fx:id="serverConsole" prefHeight="326.0" prefWidth="583.0" />
+                           </content>
+                        </ScrollPane>
                      </center>
                   </BorderPane>
                </content>

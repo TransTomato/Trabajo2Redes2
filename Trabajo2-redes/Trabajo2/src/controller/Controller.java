@@ -3,10 +3,12 @@ package controller;
  * Sample Skeleton for 'Client&ServerGui.fxml' Controller Class
  */
 
+import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import connectionTCP.EchoTCPClient;
+import connectionTCP.EchoTCPClientProtocol;
 import connectionTCP.EchoTCPServer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,7 +19,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import model.BankOptions;
@@ -53,59 +54,99 @@ public class Controller implements Initializable{
     
     private ObservableList<String> optionsTransaction = FXCollections.observableArrayList();
 
+    private Thread t1;
+    private EchoTCPServer es;
+    private EchoTCPClient ec;
+    
+    
     @FXML
     void loadFile(ActionEvent event) {
-    	System.out.println("Hola");
+    	ec.createSocket();
+		String consoleC = EchoTCPClientProtocol.loadFile(ec.clientSideSocket);
+		Text t = new Text(consoleC);
+		clientConsole.getChildren().add(t);
     }
 
     @FXML
     void transaction(ActionEvent event) {
+    	String consoleC ="",
+    			name = "",
+    			account = "",
+    			pocket = "",
+    			value = "";
+    	Text t = null;
     	String option = comboboxTransaction.getValue().toUpperCase().replace(" ", "_");
     	switch (BankOptions.valueOf(option)) {
 		case ABRIR_CUENTA:
-			String name = textInput1.getText();
+			name = textInput1.getText();
+			ec.createSocket();
+			consoleC = EchoTCPClientProtocol.createAccount(ec.clientSideSocket, name);
+			t = new Text(consoleC);
+			clientConsole.getChildren().add(t);
 		break;
 		case ABRIR_BOLSILLO:
-			label1.setText("Numero de cuenta:");
-			label2.setDisable(true);
-			textInput2.setDisable(true);
+			account = textInput1.getText();
+			ec.createSocket();
+			consoleC = EchoTCPClientProtocol.createPocket(ec.clientSideSocket, account);
+			t = new Text(consoleC);
+			clientConsole.getChildren().add(t);
 		break;
 		case CANCELAR_BOLSILLO:
-			label1.setText("Numero de bolsillo:");
-			label2.setDisable(true);
-			textInput2.setDisable(true);
+			pocket = textInput1.getText();
+			ec.createSocket();
+			consoleC = EchoTCPClientProtocol.terminatePocket(ec.clientSideSocket, pocket);
+			t = new Text(consoleC);
+			clientConsole.getChildren().add(t);
 		break;
 		case CANCELAR_CUENTA:
-			label1.setText("# de cuenta:");
-			label2.setDisable(true);
-			textInput2.setDisable(true);
+			account = textInput1.getText();
+			ec.createSocket();
+			consoleC = EchoTCPClientProtocol.terminateAccount(ec.clientSideSocket, account);
+			t = new Text(consoleC);
+			clientConsole.getChildren().add(t);
 	 	break;
 	 	case DEPOSITAR:
-	 		label1.setText("Numero de cuenta:");
-			label2.setText("Valor:");
+	 		account = textInput1.getText();
+	 		value = textInput2.getText();
+			ec.createSocket();
+			consoleC = EchoTCPClientProtocol.deposit(ec.clientSideSocket, account, value);
+			t = new Text(consoleC);
+			clientConsole.getChildren().add(t);
 	 	break;
 	 	case RETIRAR:
-	 		label1.setText("Numero de cuenta:");
-			label2.setText("Valor:");
+	 		account = textInput1.getText();
+	 		value = textInput2.getText();
+			ec.createSocket();
+			consoleC = EchoTCPClientProtocol.withdraw(ec.clientSideSocket, account, value);
+			t = new Text(consoleC);
+			clientConsole.getChildren().add(t);
 		break;
 	 	case TRASLADAR:
-	 		label1.setText("Numero de cuenta:");
-			label2.setText("Valor:");
+	 		account = textInput1.getText();
+	 		value = textInput2.getText();
+			ec.createSocket();
+			consoleC = EchoTCPClientProtocol.transfer(ec.clientSideSocket, account, value);
+			t = new Text(consoleC);
+			clientConsole.getChildren().add(t);
 		break;
 	 	case CONSULTAR:
-	 		label1.setText("Numero de cuenta/bolsillo:");
-			label2.setDisable(true);
-			textInput2.setDisable(true);
+	 		account = textInput1.getText();
+			ec.createSocket();
+			consoleC = EchoTCPClientProtocol.check(ec.clientSideSocket, account);
+			t = new Text(consoleC);
+			clientConsole.getChildren().add(t);
 		break;
 	 	case LISTAR_TRANSACCIONES:
-	 		label1.setDisable(true);
-			label2.setDisable(true);
-			textInput1.setDisable(true);
-			textInput2.setDisable(true);
+			ec.createSocket();
+			consoleC = EchoTCPClientProtocol.listTransfers(ec.clientSideSocket);
+			t = new Text(consoleC);
+			clientConsole.getChildren().add(t);
 		break;
 		default:
 			break;
 		}
+    	textInput1.setText("");
+    	textInput2.setText("");
     }
     
 
@@ -115,14 +156,13 @@ public class Controller implements Initializable{
     	label2.setDisable(false);
     	textInput1.setDisable(false);
     	textInput2.setDisable(false);
+    	transactionButton.setDisable(false);
     	String option = comboboxTransaction.getValue().toUpperCase().replace(" ", "_");
     	switch (BankOptions.valueOf(option)) {
 		case ABRIR_CUENTA:
 			label1.setText("Nombre completo:");
 			label2.setDisable(true);
 			textInput2.setDisable(true);
-			Text t = new Text("Gola \n");
-			clientConsole.getChildren().add(t);
 		break;
 		case ABRIR_BOLSILLO:
 			label1.setText("Numero de cuenta:");
@@ -172,14 +212,16 @@ public class Controller implements Initializable{
 		
 		//Initialize the EchoTCPClient and EchoTCPServer
 		
-		EchoTCPServer es = new EchoTCPServer();
-		EchoTCPClient ec = new EchoTCPClient();
-		
-		Thread t1 = new Thread(es);
-		Thread t2 = new Thread(ec);
-		
+		es = new EchoTCPServer();
+		t1 = new Thread(es);
 		t1.start();
-		t2.start();
+		
+		ec = new EchoTCPClient();
+		
+		
+		
+		
+		
 		
 		for (BankOptions op : BankOptions.values()) {
 			if(op!=BankOptions.CARGAR)

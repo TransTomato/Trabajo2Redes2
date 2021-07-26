@@ -37,7 +37,15 @@ public class EchoTCPClientProtocol {
 		String message = SCANNER.nextLine();
 		toNetwork.println(message);
 		System.out.println("SENT TO SERVER: "+message);
-		String fromServer = fromNetwork.readLine();
+		String fromServer = "";
+		
+		if(message.contains(BankOptions.LISTAR_TRANSACCIONES+"")) {
+			for (String transaction : fromNetwork.readLine().split(";")) {
+				fromServer += transaction+"\n";	
+			}
+		}else {
+			fromServer = fromNetwork.readLine();
+		}
 		System.out.println("FROM SERVER: "+fromServer);
 		
 		if(message.contains("CARGAR")) {
@@ -46,6 +54,7 @@ public class EchoTCPClientProtocol {
 				
 				createStreams(new Socket(socket.getInetAddress(), socket.getPort()));
 				toNetwork.println(transaction);
+				System.out.println("SENT TO SERVER: "+transaction);
 				fromServer = fromNetwork.readLine();
 				System.out.println("FROM SERVER: "+fromServer);
 			}
@@ -56,6 +65,297 @@ public class EchoTCPClientProtocol {
 	private static void createStreams(Socket socket) throws IOException{
 		toNetwork = new PrintWriter(socket.getOutputStream(), true);
 		fromNetwork = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+	}
+	/**
+	 * 
+	 * @param socket
+	 * @param name
+	 * @return
+	 * @throws IOException
+	 */
+	public static String createAccount(Socket socket, String name)  {
+		String console = "",
+				message = BankOptions.ABRIR_CUENTA+","+name;
+		try {
+			createStreams(socket);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		toNetwork.println(message);
+		console+="SENT TO SERVER:"+message+"\n";
+		String fromServer = "";
+		try {
+			fromServer = fromNetwork.readLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		console+="FROM SERVER: "+fromServer+"\n";
+		
+		return console;
+	}
+	/**
+	 * 
+	 * @param socket
+	 * @param accountNum
+	 * @return
+	 * @throws IOException
+	 */
+	public static String createPocket(Socket socket, String accountNum)  {
+		String console = "",
+				message = BankOptions.ABRIR_BOLSILLO+","+accountNum;
+		try {
+			createStreams(socket);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		toNetwork.println(message);
+		console+="SENT TO SERVER:"+message+"\n";
+		String fromServer = "";
+		try {
+			fromServer = fromNetwork.readLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		console+="FROM SERVER: "+fromServer+"\n";
+		
+		return console;
+	}
+	/**
+	 * 
+	 * @param socket
+	 * @param accountNum
+	 * @return
+	 * @throws IOException
+	 */
+	public static String deposit(Socket socket, String accountNum, String value)  {
+		String console = "",
+				message = BankOptions.DEPOSITAR+","+accountNum+","+value;
+		try {
+			createStreams(socket);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		toNetwork.println(message);
+		console+="SENT TO SERVER:"+message+"\n";
+		String fromServer = "";
+		try {
+			fromServer = fromNetwork.readLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		console+="FROM SERVER: "+fromServer+"\n";
+		
+		return console;
+	}
+	/**
+	 * 
+	 * @param socket
+	 * @param accountNum
+	 * @param value
+	 * @return
+	 * @throws IOException
+	 */
+	public static String transfer(Socket socket, String accountNum, String value)  {
+		String console = "",
+				message = BankOptions.TRASLADAR+","+accountNum+","+value;
+		try {
+			createStreams(socket);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		toNetwork.println(message);
+		console+="SENT TO SERVER:"+message+"\n";
+		String fromServer = "";
+		try {
+			fromServer = fromNetwork.readLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		console+="FROM SERVER: "+fromServer+"\n";
+		
+		return console;
+	}
+	/**
+	 * 
+	 * @param socket
+	 * @param accountNum
+	 * @param value
+	 * @return
+	 * @throws IOException
+	 */
+	public static String withdraw(Socket socket, String accountNum, String value)  {
+		String console = "",
+				message = BankOptions.CANCELAR_CUENTA+","+accountNum+","+value;
+		try {
+			createStreams(socket);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		toNetwork.println(message);
+		console+="SENT TO SERVER:"+message+"\n";
+		String fromServer = "";
+		try {
+			fromServer = fromNetwork.readLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		console+="FROM SERVER: "+fromServer+"\n";
+		
+		return console;
+	}
+	/**
+	 * 
+	 * @param socket
+	 * @param pocketNum
+	 * @return
+	 * @throws IOException
+	 */
+	public static String terminatePocket(Socket socket, String pocketNum) {
+		String console = "",
+				message = BankOptions.CANCELAR_BOLSILLO+","+pocketNum;
+		try {
+			createStreams(socket);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		toNetwork.println(message);
+		console+="SENT TO SERVER:"+message+"\n";
+		String fromServer = "";
+		try {
+			fromServer = fromNetwork.readLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		console+="FROM SERVER: "+fromServer+"\n";
+		
+		return console;
+	}
+	/**
+	 * 
+	 * @param socket
+	 * @param accountNum
+	 * @return
+	 * @throws IOException
+	 */
+	public static String terminateAccount(Socket socket, String accountNum) {
+		String console = "",
+				message = BankOptions.CANCELAR_CUENTA+","+accountNum;
+		try {
+			createStreams(socket);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		toNetwork.println(message);
+		console+="SENT TO SERVER:"+message+"\n";
+		String fromServer = "";
+		try {
+			fromServer = fromNetwork.readLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		console+="FROM SERVER: "+fromServer+"\n";
+		
+		return console;
+	}
+	/**
+	 * 
+	 * @param socket
+	 * @param accountNum
+	 * @return
+	 * @throws IOException
+	 */
+	public static String check(Socket socket, String accountNum) {
+		String console = "",
+				message = BankOptions.CONSULTAR+","+accountNum;
+		try {
+			createStreams(socket);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		toNetwork.println(message);
+		console+="SENT TO SERVER:"+message+"\n";
+		String fromServer = "";
+		try {
+			fromServer = fromNetwork.readLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		console+="FROM SERVER: "+fromServer+"\n";
+		
+		return console;
+	}
+	/**
+	 * 
+	 * @param socket
+	 * @return
+	 * @throws IOException
+	 */
+	public static String listTransfers(Socket socket) {
+		String console = "",
+				message = BankOptions.LISTAR_TRANSACCIONES+"";
+		String fromServer = "";
+		try {
+			createStreams(socket);
+		toNetwork.println(message);
+		console+="SENT TO SERVER:"+message+"\n";
+		for (String transaction : fromNetwork.readLine().split(";")) {
+			fromServer += transaction+"\n";	
+		}
+		
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		console+="FROM SERVER: \n"+fromServer;
+		return console;
+	}
+	/**
+	 * 
+	 * @param socket
+	 * @return
+	 * @throws IOException
+	 */
+	public static String loadFile(Socket socket) {
+		String console = "",
+				message = BankOptions.CARGAR+",transactions_example.txt",
+				fromServer = "";
+		try {
+			createStreams(socket);
+
+			toNetwork.println(message);
+			console += "SENT TO SERVER: "+message+"\n";
+			fromServer = fromNetwork.readLine();
+			console += "FROM SERVER: "+fromServer+"\n";
+		ArrayList<String> transactions = ObjectReader.readTransactions("transactions_example.txt");
+		for (String transaction : transactions) {
+				createStreams(new Socket(socket.getInetAddress(), socket.getPort()));
+			toNetwork.println(transaction);
+			console+="SENT TO SERVER:"+transaction+"\n";
+			fromServer = fromNetwork.readLine();
+			console+="FROM SERVER: "+fromServer+"\n";
+		}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return console;
 	}
 
 }
