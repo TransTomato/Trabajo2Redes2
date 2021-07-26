@@ -54,6 +54,7 @@ public class EchoTCPClientProtocol {
 				
 				createStreams(new Socket(socket.getInetAddress(), socket.getPort()));
 				toNetwork.println(transaction);
+				System.out.println("SENT TO SERVER: "+transaction);
 				fromServer = fromNetwork.readLine();
 				System.out.println("FROM SERVER: "+fromServer);
 			}
@@ -332,31 +333,27 @@ public class EchoTCPClientProtocol {
 	 * @throws IOException
 	 */
 	public static String loadFile(Socket socket) {
-		String console = "";
+		String console = "",
+				message = BankOptions.CARGAR+",transactions_example.txt",
+				fromServer = "";
 		try {
 			createStreams(socket);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+
+			toNetwork.println(message);
+			console += "SENT TO SERVER: "+message+"\n";
+			fromServer = fromNetwork.readLine();
+			console += "FROM SERVER: "+fromServer+"\n";
 		ArrayList<String> transactions = ObjectReader.readTransactions("transactions_example.txt");
 		for (String transaction : transactions) {
-			try {
 				createStreams(new Socket(socket.getInetAddress(), socket.getPort()));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			toNetwork.println(transaction);
 			console+="SENT TO SERVER:"+transaction+"\n";
-			String fromServer = "";
-			try {
-				fromServer = fromNetwork.readLine();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			fromServer = fromNetwork.readLine();
 			console+="FROM SERVER: "+fromServer+"\n";
+		}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return console;
 	}
