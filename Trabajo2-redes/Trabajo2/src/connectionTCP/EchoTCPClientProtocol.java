@@ -41,7 +41,8 @@ public class EchoTCPClientProtocol {
 		if(message.contains("CARGAR")) {
 			ArrayList<String> transactions = ObjectReader.readTransactions(message.split(",")[1]);
 			for (String transaction : transactions) {
-				createStreams(socket);
+				
+				createStreams(new Socket(socket.getInetAddress(), socket.getPort()));
 				toNetwork.println(transaction);
 				fromServer = fromNetwork.readLine();
 				System.out.println("FROM SERVER: "+fromServer);
