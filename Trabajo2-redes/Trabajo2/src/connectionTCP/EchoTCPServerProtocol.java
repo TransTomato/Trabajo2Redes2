@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import exceptions.ColonException;
+import exceptions.DepositException;
 import exceptions.FunarAccountException;
 import exceptions.FunarPocketException;
 import exceptions.NameException;
@@ -106,9 +107,24 @@ public class EchoTCPServerProtocol {
 			 		}
 			 	break;
 			 	case DEPOSITAR:
-			 		bank.deposit(message.split(",")[1], Integer.parseInt(message.split(",")[2]));
-			 		bank.addTransaction(message.split(",")[0]);
-			 		answer = "Se depositó "+message.split(",")[2]+" en la cuenta # "+message.split(",")[1]+" correctamente";
+			 		try {
+			 			invalidColon(message,2);
+			 			int value = Integer.parseInt(message.split(",")[1]);
+			 			int depo = Integer.parseInt(message.split(",")[2]);
+			 			depositAccount(message.split(",")[1],message.split(",")[2],bank);
+				 		bank.deposit(message.split(",")[1], Integer.parseInt(message.split(",")[2]));
+				 		bank.addTransaction(message.split(",")[0]);
+				 		answer = "Se depositó "+message.split(",")[2]+" en la cuenta # "+message.split(",")[1]+" correctamente";
+			 		}
+			 		catch (NumberFormatException e) {
+			 			System.out.println("Por favor ingrese un numero.");
+			 			answer="Por favor ingrese un numero.";
+			 		}
+			 		catch(Exception bo) {
+			 			System.out.println(bo.getMessage());
+			 			answer=bo.getMessage();
+			 		}
+			 		
 			 	break;
 			 	case RETIRAR:
 				 	bank.withdraw(message.split(",")[1], Integer.parseInt(message.split(",")[2]));
@@ -211,6 +227,15 @@ public class EchoTCPServerProtocol {
 		}
 		if(bank.accounts.get(message).getBalance()>0) {
 			throw new FunarAccountException("No se puede cerrar la cuenta porque no tiene un saldo de 0");
+		}
+	}
+	
+	public static void depositAccount(String message,String valor,Bank bank) throws DepositException {
+		if(!bank.accounts.containsKey(message)) {
+			throw new DepositException("No se puede depositar a una cuenta que no existe");
+		}
+		if(Integer.parseInt(valor)<=0) {
+			throw new DepositException("No se puede depositar un valor nulo o negativo");
 		}
 	}
 }
