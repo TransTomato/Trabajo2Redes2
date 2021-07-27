@@ -43,6 +43,7 @@ public class EchoTCPServerProtocol {
 			 		try {
 			 			invalidColon(message,1);
 			 			invalidName(message.split(",")[1],bank);
+			 			
 			 			bank.createAccount(message.split(",")[1]);
 			 			bank.addTransaction(message.split(",")[0]);
 						answer = "Cuenta creada correctamente. Usted es la cuenta # "+(bank.accounts.size()-1);
@@ -155,7 +156,7 @@ public class EchoTCPServerProtocol {
 			 			moveMoney(message.split(",")[1],message.split(",")[2],bank);
 					 	bank.transfer(message.split(",")[1], Integer.parseInt(message.split(",")[2]));
 					 	bank.addTransaction(message.split(",")[0]);
-					 	answer = "Se trasladó "+message.split(",")[2]+" al bolsillo # "+message.split(",")[1]+" correctamente";
+					 	answer = "Se trasladó "+message.split(",")[2]+" al bolsillo # b"+message.split(",")[1]+" correctamente";
 			 		}
 			 		catch (NumberFormatException e) {
 			 			System.out.println("Por favor ingrese un numero.");
