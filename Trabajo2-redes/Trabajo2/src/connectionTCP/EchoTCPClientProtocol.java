@@ -193,7 +193,7 @@ public class EchoTCPClientProtocol {
 	 */
 	public static String withdraw(Socket socket, String accountNum, String value)  {
 		String console = "",
-				message = BankOptions.CANCELAR_CUENTA+","+accountNum+","+value;
+				message = BankOptions.RETIRAR+","+accountNum+","+value;
 		try {
 			createStreams(socket);
 		} catch (IOException e) {
