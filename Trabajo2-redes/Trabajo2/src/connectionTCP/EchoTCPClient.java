@@ -6,6 +6,8 @@ import java.net.UnknownHostException;
 
 public class EchoTCPClient {
 	
+	//public static final int PORT = 19619;
+	//public static final String SERVER = "0.tcp.ngrok.io";
 	public static final int PORT = 3400;
 	public static final String SERVER = "localhost";
 	public static boolean close = false;
