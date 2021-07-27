@@ -17,6 +17,7 @@ public class App extends Application {
 			fxmlLoader.setLocation(getClass().getResource("../view/ClientServerGui.fxml"));
 			Scene scene = new Scene(fxmlLoader.load());
 			Stage stage = new Stage();
+			stage.setTitle("echoTCP - Cliente Servidor - Banco");
 			stage.setScene(scene);
 			stage.show();
 		} catch (IOException e) {
