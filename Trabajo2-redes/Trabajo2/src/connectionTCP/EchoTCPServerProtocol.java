@@ -287,9 +287,7 @@ public class EchoTCPServerProtocol {
 		if(!bank.accounts.containsKey(message)) {
 			throw new DepositException("No se puede depositar a una cuenta que no existe");
 		}
-		if(bank.accounts.get(message).getAccountPocket()==null) {
-			throw new DepositException("No se puede depositar dienero cuando no existe un bolsillo");
-		}
+		
 		if(Integer.parseInt(valor)<=0) {
 			throw new DepositException("No se puede depositar un valor nulo o negativo");
 		}
