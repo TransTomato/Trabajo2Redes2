@@ -48,19 +48,6 @@
                   </VBox>
                </content>
             </Tab>
-          <Tab text="Servidor">
-               <content>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0">
-                     <center>
-                        <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                           <content>
-                              <TextFlow fx:id="serverConsole" prefHeight="326.0" prefWidth="583.0" />
-                           </content>
-                        </ScrollPane>
-                     </center>
-                  </BorderPane>
-               </content>
-            </Tab>
         </tabs>
       </TabPane>
    </center>
