@@ -39,7 +39,7 @@ public class EchoTCPClientProtocol {
 		System.out.println("SENT TO SERVER: "+message);
 		String fromServer = "";
 		
-		if(message.contains(BankOptions.LISTAR_TRANSACCIONES+"")) {
+		if(message.contains("LISTAR_TRANSACCIONES")) {
 			for (String transaction : fromNetwork.readLine().split(";")) {
 				fromServer += transaction+"\n";	
 			}
