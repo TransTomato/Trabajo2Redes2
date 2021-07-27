@@ -77,7 +77,8 @@ public class EchoTCPServerProtocol {
 			 	case CANCELAR_BOLSILLO:
 			 		try {
 			 			invalidColon(message,1);
-			 			int value = Integer.parseInt(message.split(",")[1]);
+
+			 			int value = Integer.parseInt(message.split(",")[1].replaceFirst("b", ""));
 			 			funarPocket(message.split(",")[1],bank);
 						bank.terminatePocket(message.split(",")[1]);
 						bank.addTransaction(message.split(",")[0]);
@@ -256,12 +257,18 @@ public class EchoTCPServerProtocol {
 	}
 	
 	public static void funarPocket(String message,Bank bank) throws FunarPocketException {
-		if(!bank.accounts.containsKey(message)) {
-			throw new FunarPocketException("La cuenta a la que quiere cerrar un bolsillo no existe");
+		if(message.charAt(0)=='b') {
+			if(!bank.accounts.containsKey(message.replaceFirst("b", ""))) {
+				throw new FunarPocketException("La cuenta a la que quiere cerrar un bolsillo no existe");
+			}
+			if(bank.accounts.get(message.replaceFirst("b", "")).getAccountPocket()==null) {
+				throw new FunarPocketException("No se puede cerrar un bolsillo que no existe");
+			}
 		}
-		if((bank.accounts.get(message).getAccountPocket()==null)) {
-			throw new FunarPocketException("La cuenta no posee un bolsillo");
+		else {
+			throw new FunarPocketException("Por favor ingrese un numero de bolsillo");
 		}
+		
 	}
 	
 	public static void funarAccount(String message,Bank bank) throws FunarAccountException {
@@ -303,10 +310,10 @@ public class EchoTCPServerProtocol {
 	
 	public static void moveMoney(String message,String valor,Bank bank) throws MoveException {
 		if(!bank.accounts.containsKey(message)) {
-			throw new MoveException("No se puede transladar dienero de una cuenta que no existe");
+			throw new MoveException("No se puede transladar dinero de una cuenta que no existe");
 		}
 		if(bank.accounts.get(message).getAccountPocket()==null) {
-			throw new MoveException("No se puede transladar dienero cuando no existe un bolsillo");
+			throw new MoveException("No se puede transladar dinero cuando no existe un bolsillo");
 		}
 		if(Integer.parseInt(valor)<=0) {
 			throw new MoveException("No se puede trasladar un valor nulo o negativo");
@@ -319,12 +326,12 @@ public class EchoTCPServerProtocol {
 	public static void consultMoney(String message,Bank bank) throws ConsultException {
 		if(message.charAt(0)=='b') {
 			if(bank.accounts.get(message.replaceFirst("b", "")).getAccountPocket()==null) {
-				throw new ConsultException("No se puede consultar dienero de un bolsillo que no existe");
+				throw new ConsultException("No se puede consultar dinero de un bolsillo que no existe");
 			}
 		}
 		else{
 			if(!bank.accounts.containsKey(message)) {
-			throw new ConsultException("No se puede consultar dienero de una cuenta que no existe");
+			throw new ConsultException("No se puede consultar dinero de una cuenta que no existe");
 			}
 		}
 	}
