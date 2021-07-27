@@ -323,6 +323,9 @@ public class EchoTCPServerProtocol {
 	
 	public static void consultMoney(String message,Bank bank) throws ConsultException {
 		if(message.charAt(0)=='b') {
+			if(!bank.accounts.containsKey(message.replaceFirst("b", ""))) {
+				throw new ConsultException("No se puede consultar dinero de un bolsillo de una cuenta que no existe");
+			}
 			if(bank.accounts.get(message.replaceFirst("b", "")).getAccountPocket()==null) {
 				throw new ConsultException("No se puede consultar dinero de un bolsillo que no existe");
 			}
